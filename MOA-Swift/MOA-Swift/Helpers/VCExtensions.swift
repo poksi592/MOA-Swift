@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIViewController {
+internal extension UIViewController {
     
     class func topPresentedController() -> UIViewController? {
         

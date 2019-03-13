@@ -17,7 +17,7 @@ public typealias ModuleCallback = ([String: Any]?, Data?, URLResponse?, Response
  - access/open the modules
  - provide the callback, result of the access
  */
-protocol ApplicationRouterType: class {
+public protocol ApplicationRouterType: class {
     
     var instantiatedModules: [ModuleType] { get set }
     var moduleQueue: DispatchQueue { get }
@@ -26,7 +26,7 @@ protocol ApplicationRouterType: class {
               callback: ModuleCallback?)
 }
 
-extension ApplicationRouterType {
+public extension ApplicationRouterType {
     
     func open(url: URL,
               callback: ModuleCallback?) {
@@ -51,28 +51,29 @@ extension ApplicationRouterType {
     }
 }
 
-class ApplicationRouter: ApplicationRouterType {
+public class ApplicationRouter: ApplicationRouterType {
     
     // TODO: This is synchronising only write access, which might be inadequate in many cases
     // Need to be replaced with proper full generic implementation of synchronized collection
-    private (set) var moduleQueue = DispatchQueue(label: "com.yourbank.module.queue")
+	private (set) public var moduleQueue = DispatchQueue(label: "com.yourapp.module.queue")
     
     // ApplicationRouter is a singleton, because it makes it easier to be accessed from anywhere to access its functions/services
     static let shared = ApplicationRouter()
     
     // We instantiate Modules and add them to the array here...
-    var instantiatedModules: [ModuleType] = []
+	public var instantiatedModules: [ModuleType] = []
 }
 
-@objc class URLRouter: URLProtocol, URLSessionDataDelegate, URLSessionTaskDelegate {
+@objc
+public class URLRouter: URLProtocol, URLSessionDataDelegate, URLSessionTaskDelegate {
     
     // TODO: This is synchronisyng only write access, which might be inadequate in many cases
     // Need to be replaced with proper full generic implementation of synchronized collection
-    private (set) var moduleQueue = DispatchQueue(label: "com.yourbank.module.queue")
+    private (set) var moduleQueue = DispatchQueue(label: "com.yourapp.module.queue.url-router")
     
     // MARK: URLProtocol methods overriding
     
-    override class func canInit(with task: URLSessionTask) -> Bool {
+	override public class func canInit(with task: URLSessionTask) -> Bool {
         
         // Check if there's internal app schema that matches the one in the URL
         guard let url = task.originalRequest?.url,
@@ -88,12 +89,12 @@ class ApplicationRouter: ApplicationRouterType {
         return true
     }
     
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+	override public class func canonicalRequest(for request: URLRequest) -> URLRequest {
         return request
     }
     
     
-    override func startLoading() {
+	override public func startLoading() {
         
         guard let url = request.url else {
             return
@@ -105,6 +106,6 @@ class ApplicationRouter: ApplicationRouterType {
         }
     }
     
-    override func stopLoading() {
+	override public func stopLoading() {
     }
 }

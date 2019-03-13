@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension URL {
+internal extension URL {
     
     init?(schema: String,
           host: String,
@@ -81,7 +81,7 @@ extension URL {
     }
 }
 
-extension URLComponents {
+internal extension URLComponents {
     
     var queryItemsDictionary: [String: String]? {
         var params = [String: String]()

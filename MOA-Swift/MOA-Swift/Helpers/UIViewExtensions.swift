@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+internal extension UIView {
     
     static func instantiateFromNib() -> UIView {
 

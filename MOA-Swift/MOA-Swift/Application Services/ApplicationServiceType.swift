@@ -51,7 +51,7 @@ enum ValueType {
  It's based on execution steps from JSON file, which is passed by initialisation.
  */
 
-protocol ApplicationServiceType: class {
+public protocol ApplicationServiceType: class {
     
     var serviceParameters: [String: Any] {get set}
     var service: [String: Any] {get set}
@@ -70,7 +70,7 @@ protocol ApplicationServiceType: class {
                                 service: () -> ())
 }
 
-extension ApplicationServiceType {
+public extension ApplicationServiceType {
     
     var serviceName: String? {
         

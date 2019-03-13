@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension Bundle {
+internal extension Bundle {
     
     var urlSchemes: [String]? {
         

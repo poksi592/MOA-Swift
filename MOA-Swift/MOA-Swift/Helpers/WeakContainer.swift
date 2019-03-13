@@ -11,7 +11,7 @@ import Foundation
 public struct WeakContainer<T> {
 
     private weak var internalValue: AnyObject?
-    public var value: T? {
+	var value: T? {
         get {
             return internalValue as? T
         }
@@ -20,7 +20,7 @@ public struct WeakContainer<T> {
         }
     }
     
-    public init(value: T) {
+	init(value: T) {
         self.value = value
     }
 }

@@ -74,7 +74,7 @@ public protocol WireframeType: class {
 }
 
 
-extension WireframeType {
+public extension WireframeType {
     
     func setupWireframe(parameters: ModuleParameters?) {
         
