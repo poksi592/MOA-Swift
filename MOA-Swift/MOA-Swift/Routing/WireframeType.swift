@@ -216,7 +216,7 @@ public extension WireframeType {
             
             present(viewController: viewController)
             guard let specificViewController = viewController as? VC else { return nil }
-            var varSpecificViewController = specificViewController
+			let varSpecificViewController = specificViewController
             varSpecificViewController.presenter = presenter
             return varSpecificViewController
         }
