@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MOA-Swift"
-  s.version      = "0.1.0"
+  s.version      = "0.1.2"
   s.summary      = "Swift Boilerplate code and building blocks for Module Oriented Architecture (MOA)"
   s.description  = <<-DESC
                   Module Oriented Architecture (MOA) is a principle of building the client apps
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "11.0"
   s.swift_version = "4.2"
 
-  s.source       = { :git => "https://github.com/poksi592/MOA-Swift.git", :tag => "0.1.0" }
+  s.source       = { :git => "https://github.com/poksi592/MOA-Swift.git", :tag => "0.1.2" }
 
   s.source_files  = "MOA-Swift/MOA-Swift/Helpers/*", "MOA-Swift/MOA-Swift/Application Services/*", "MOA-Swift/MOA-Swift/Routing/*"
   s.exclude_files = "MOA-Swift/MOA-Swift/Application Services/Examples/*"
