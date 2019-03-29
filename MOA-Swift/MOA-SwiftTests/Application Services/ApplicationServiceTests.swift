@@ -233,12 +233,12 @@ class ApplicationServiceTests: XCTestCase {
 		
     }
 	
-//	func test_loadService() {
-//		
-//		let array = mockPayUseCase.loadService(jsonFilename: "MockPayUseCase")
-//		
-//		XCTAssertNotNil(array)
-//	}
+	func test_loadService() {
+
+		let array = mockPayUseCase.loadService(jsonFilename: "MockPayUseCase")
+
+		XCTAssertNotNil(array)
+	}
 	
     
     

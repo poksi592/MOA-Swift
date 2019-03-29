@@ -94,16 +94,7 @@ public extension ApplicationServiceType {
     
     func loadService(jsonFilename: String) -> [String: Any]? {
 		
-        if let filepath = bundle.path(forResource: jsonFilename, ofType: "json"),
-            let url = URL(string: filepath),
-            let data = try? Data(contentsOf: url),
-            let deserialised = try? JSONSerialization.jsonObject(with: data,
-                                                                 options: JSONSerialization.ReadingOptions.allowFragments),
-            let serviceDictionary = deserialised as? [String: Any] {
-            
-            return serviceDictionary
-        }
-        else { return nil }
+		return bundle.loadJson(filename: jsonFilename)
     }
     
     // Calls the service recursivelly again, if it finds it as dictionary in array passed.

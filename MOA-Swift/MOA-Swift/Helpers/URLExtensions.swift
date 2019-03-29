@@ -17,6 +17,7 @@ internal extension URL {
         
         guard schema.count > 0 else { return nil }
         var components = URLComponents()
+
         components.scheme = schema
         components.host = host
         components.path = path ?? ""
@@ -92,3 +93,23 @@ internal extension URLComponents {
         })
     }
 }
+
+internal extension String {
+	
+	var isValidScheme: Bool {
+		get {
+			guard let regex = try? NSRegularExpression(pattern: "^[A-Za-z][+-.A-Za-z0-9]*$",
+													   options: NSRegularExpression.Options.caseInsensitive) else { return false }
+			return self.match(with: regex)
+		}
+	}
+	
+	func match(with regex: NSRegularExpression) -> Bool {
+		
+		let range = NSRange(location: 0, length: self.utf16.count)
+		return regex.firstMatch(in: self,
+								options: NSRegularExpression.MatchingOptions.withoutAnchoringBounds,
+								range: range) != nil
+	}
+}
+
