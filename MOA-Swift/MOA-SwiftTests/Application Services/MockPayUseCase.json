@@ -1,0 +1,51 @@
+{
+    "%%serviceParameters": [
+        "##amount",
+        "##paymentToken"
+    ],
+    "@@pay": [
+        {
+            "%%open": {
+                "%%module": "payments",
+                "%%method": "/pay",
+                "%%parameters": {
+                    "amount": "##amount",
+                    "token": "##paymentToken",
+                    "presentationMode": "navigationStack",
+                    "viewController": "PaymentsViewControllerId"
+                },
+                "%%callback": [
+                    {
+                        "%%error": {
+                            "401,500": [
+                                {
+                                    "%%open": {
+                                        "%%module": "login",
+                                        "%%method": "/payment-token",
+                                        "%%parameters": {
+                                            "amount": "##amount",
+                                            "token": "##paymentToken",
+                                            "presentationMode": "modal",
+                                            "viewController": "LoginViewControllerId"
+                                        },
+                                        "%%callback": [
+                                            {
+                                                "%%response.paymentToken": [
+                                                    {
+                                                        "@@pay": {
+                                                            "##paymentToken": "%%response.paymentToken"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

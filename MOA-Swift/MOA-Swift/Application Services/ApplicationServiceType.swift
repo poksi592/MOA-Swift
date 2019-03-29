@@ -58,8 +58,9 @@ public protocol ApplicationServiceType: class {
     var appRouter: ApplicationRouterType {get set}
     var scheme: String {get set}
     var serviceName: String? {get}
+	var bundle: Bundle { get set }
     
-    init?(jsonFilename: String?)
+	init?(jsonFilename: String?, bundle: Bundle)
     
     func loadService(jsonFilename: String) -> [String: Any]?
     func valid() -> Bool
@@ -92,8 +93,8 @@ public extension ApplicationServiceType {
     }
     
     func loadService(jsonFilename: String) -> [String: Any]? {
-        
-        if let filepath = Bundle.main.path(forResource: jsonFilename, ofType: "json"),
+		
+        if let filepath = bundle.path(forResource: jsonFilename, ofType: "json"),
             let url = URL(string: filepath),
             let data = try? Data(contentsOf: url),
             let deserialised = try? JSONSerialization.jsonObject(with: data,

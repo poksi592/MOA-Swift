@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.social_media_url   = "http://twitter.com/mladendes"
 
   s.platform     = :ios, "11.0"
-  s.swift_version = "4.2"
+  s.swift_version = '4.2'
 
   s.source       = { :git => "https://github.com/poksi592/MOA-Swift.git", :tag => "0.1.2" }
 

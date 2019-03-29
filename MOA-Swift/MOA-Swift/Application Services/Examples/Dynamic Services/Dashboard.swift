@@ -9,7 +9,7 @@
 import Foundation
 
 class Dashboard: ApplicationServiceType {
-    
+
     internal var serviceParameters: [String: Any] = [:]
     internal var service: [String: Any] = [:]
     var appRouter: ApplicationRouterType = ApplicationRouter()
@@ -17,7 +17,7 @@ class Dashboard: ApplicationServiceType {
     
     var bundle = Bundle.main
     
-    required init(jsonFilename: String? = nil) {
+	required init(jsonFilename: String? = nil, bundle: Bundle = Bundle.main) {
         
         if let serviceDictionary = bundle.loadJson(filename: "Dashboard2") {
             self.service = serviceDictionary
