@@ -10,26 +10,6 @@ import XCTest
 @testable import MOA_Swift
 
 class URLExtensionsTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 	
 	func test_initValidScheme() {
 		
@@ -38,11 +18,11 @@ class URLExtensionsTests: XCTestCase {
 		XCTAssertNotNil(url)
 	}
 	
-//	func test_initIncorrectParameters() {
-//
-//		let url = URL(schema: "234623", host: "234345")
-//		XCTAssertNil(url)
-//	}
+	func test_initIncorrectParameters() {
+
+		let url = URL(schema: "234623", host: "234345")
+		XCTAssertNil(url)
+	}
 	
 	func test_initAllParameters() {
 		
@@ -55,6 +35,8 @@ class URLExtensionsTests: XCTestCase {
 		XCTAssertEqual(url?.host, "myhost")
 		XCTAssertEqual(url?.path, "/mypath")
 	}
+	
+	// MARK: Test scheme
 
 	func test_isValidSchemeValid() {
 		
@@ -91,4 +73,138 @@ class URLExtensionsTests: XCTestCase {
 		let scheme = "a1sd+c.d-w*"
 		XCTAssertFalse(scheme.isValidScheme)
 	}
+	
+	// MARK: Test Host
+	
+	func test_isValidHostModuleLettersOnly() {
+		
+		let moduleName = "abcd"
+		XCTAssertTrue(moduleName.isValidHostModule)
+	}
+	
+	func test_isValidHostModuleLettersAndDash() {
+		
+		let moduleName = "abc-d"
+		XCTAssertTrue(moduleName.isValidHostModule)
+	}
+	
+	func test_isValidHostModuleLettersAndNumbers() {
+		
+		let moduleName = "abc-d9"
+		XCTAssertTrue(moduleName.isValidHostModule)
+	}
+	
+	func test_isValidHostModuleNotFirstLetter() {
+		
+		let moduleName = "9abc-d9"
+		XCTAssertFalse(moduleName.isValidHostModule)
+	}
+	
+	func test_isValidHostModuleInvalidCharacter1() {
+		
+		let moduleName = "abc-d9*"
+		XCTAssertFalse(moduleName.isValidHostModule)
+	}
+	
+	func test_isValidHostModuleInvalidCharacter2() {
+		
+		let moduleName = "abc-d9."
+		XCTAssertFalse(moduleName.isValidHostModule)
+	}
+	
+	// MARK: Test Path
+	
+	func test_isValidPathModuleLettersOnly() {
+		
+		let moduleName = "/abcd"
+		XCTAssertTrue(moduleName.isValidPathModule)
+	}
+	
+	func test_isValidPathModuleLettersAndDash() {
+		
+		let moduleName = "/abc-d"
+		XCTAssertTrue(moduleName.isValidPathModule)
+	}
+	
+	func test_isValidPathModuleLettersAndNumbers() {
+		
+		let moduleName = "/abc-d9"
+		XCTAssertTrue(moduleName.isValidPathModule)
+	}
+	
+	func test_isValidPathModuleNotSlach() {
+		
+		let moduleName = "abc-d9"
+		XCTAssertFalse(moduleName.isValidPathModule)
+	}
+	
+	func test_isValidPathModuleInvalidCharacter1() {
+		
+		let moduleName = "/abc-d9*"
+		XCTAssertFalse(moduleName.isValidPathModule)
+	}
+	
+	func test_isValidPathModuleInvalidCharacter2() {
+		
+		let moduleName = "/abc-d9."
+		XCTAssertFalse(moduleName.isValidPathModule)
+	}
+	
+	// MARK: Test Bundle
+	
+	func test_containsInAppSchemeValidScheme() {
+		
+		// Prepare
+		let url = URL(schema: "testScheme",
+					  host: "myhost")
+		let bundle = Bundle(for: URLExtensionsTests.self)
+		
+		// Execute
+		let hasScheme = url!.containsInAppSchema(for: bundle)
+		
+		// Testz
+		XCTAssertNotNil(hasScheme)
+	}
+	
+	func test_containsInAppSchemeInvalidScheme() {
+		
+		// Prepare
+		let url = URL(schema: "myscheme",
+					  host: "myhost")
+		let bundle = Bundle(for: URLExtensionsTests.self)
+		
+		// Execute
+		let hasScheme = url!.containsInAppSchema(for: bundle)
+		
+		// Test
+		XCTAssertNotNil(hasScheme)
+	}
+	
+	func test_isHttpAddressHttp() {
+		
+		// Prepare
+		let url = URL(schema: "http",
+					  host: "myhost")
+		// Test
+		XCTAssertTrue(url!.isHttpAddress)
+	}
+	
+	func test_isHttpAddressHttps() {
+		
+		// Prepare
+		let url = URL(schema: "https",
+					  host: "myhost")
+		// Test
+		XCTAssertTrue(url!.isHttpAddress)
+	}
+	
+	func test_isHttpAddressNot() {
+		
+		// Prepare
+		let url = URL(schema: "myscheme",
+					  host: "myhost")
+		// Test
+		XCTAssertFalse(url!.isHttpAddress)
+	}
 }
+

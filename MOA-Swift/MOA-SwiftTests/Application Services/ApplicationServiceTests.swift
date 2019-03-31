@@ -315,5 +315,6 @@ class MockRoutable: ModuleRoutable {
 	
 	func route(parameters: ModuleParameters?, path: String?, callback: ModuleCallback?) {
 		spyRoute = true
+		callback!(nil,nil,nil,nil)
 	}
 }

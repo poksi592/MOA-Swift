@@ -135,12 +135,6 @@ public protocol ModuleType: class {
     func open(parameters: ModuleParameters?,
               path: String?,
               callback: ModuleCallback?)
-    
-    /**
-     This function could be called from `open` or any other for that matter.
-     It facilitates any potentially additionally setup, that a module would eventually need.
-     */
-    func setup(parameters: ModuleParameters?)
 }
 
 public extension ModuleType {
@@ -175,11 +169,7 @@ public extension ModuleType {
                             path: path,
                             callback: callback)
         }
-        
-        setup(parameters: parameters)
     }
-    
-    func setup(parameters: ModuleParameters?) { }
 }
 
 /**

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		CC930AD9224E47A50064A541 /* WeakContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AD8224E47A50064A541 /* WeakContainerTests.swift */; };
 		CC930ADB224E532C0064A541 /* URLExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */; };
+		CC930ADD2250E7080064A541 /* BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADC2250E7080064A541 /* BundleTests.swift */; };
+		CC930AE02250F7100064A541 /* ApplicationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADF2250F7100064A541 /* ApplicationRouterTests.swift */; };
+		CC930AE22251288C0064A541 /* ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE12251288C0064A541 /* ModuleTests.swift */; };
+		CC930AE42251397E0064A541 /* DashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE32251397E0064A541 /* DashboardTests.swift */; };
 		CCCF3CA62226F28B00A7DF69 /* MOA_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */; };
 		CCCF3CAB2226F28B00A7DF69 /* MOA_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CAA2226F28B00A7DF69 /* MOA_SwiftTests.swift */; };
 		CCCF3CAD2226F28B00A7DF69 /* MOA_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,6 +46,10 @@
 /* Begin PBXFileReference section */
 		CC930AD8224E47A50064A541 /* WeakContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakContainerTests.swift; sourceTree = "<group>"; };
 		CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensionsTests.swift; sourceTree = "<group>"; };
+		CC930ADC2250E7080064A541 /* BundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleTests.swift; sourceTree = "<group>"; };
+		CC930ADF2250F7100064A541 /* ApplicationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRouterTests.swift; sourceTree = "<group>"; };
+		CC930AE12251288C0064A541 /* ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTests.swift; sourceTree = "<group>"; };
+		CC930AE32251397E0064A541 /* DashboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTests.swift; sourceTree = "<group>"; };
 		CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MOA_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOA_Swift.h; sourceTree = "<group>"; };
 		CCCF3CA02226F28B00A7DF69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,8 +97,18 @@
 			children = (
 				CC930AD8224E47A50064A541 /* WeakContainerTests.swift */,
 				CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */,
+				CC930ADC2250E7080064A541 /* BundleTests.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CC930ADE2250F6E70064A541 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				CC930ADF2250F7100064A541 /* ApplicationRouterTests.swift */,
+				CC930AE12251288C0064A541 /* ModuleTests.swift */,
+			);
+			path = Routing;
 			sourceTree = "<group>";
 		};
 		CCCF3C922226F28B00A7DF69 = {
@@ -128,6 +146,7 @@
 			children = (
 				CC930AD7224E47840064A541 /* Helpers */,
 				CCDE4F13224D0401003D0208 /* Application Services */,
+				CC930ADE2250F6E70064A541 /* Routing */,
 				CCCF3CAA2226F28B00A7DF69 /* MOA_SwiftTests.swift */,
 				CCCF3CAC2226F28B00A7DF69 /* Info.plist */,
 			);
@@ -197,6 +216,7 @@
 				CCDE4F15224D042A003D0208 /* ApplicationServiceParserTests.swift */,
 				CCDE4F16224D042A003D0208 /* ApplicationServiceTests.swift */,
 				CCDE4F14224D042A003D0208 /* MockPayUseCase.json */,
+				CC930AE32251397E0064A541 /* DashboardTests.swift */,
 			);
 			path = "Application Services";
 			sourceTree = "<group>";
@@ -331,10 +351,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC930ADB224E532C0064A541 /* URLExtensionsTests.swift in Sources */,
+				CC930AE02250F7100064A541 /* ApplicationRouterTests.swift in Sources */,
+				CC930ADD2250E7080064A541 /* BundleTests.swift in Sources */,
 				CCDE4F19224D042A003D0208 /* ApplicationServiceTests.swift in Sources */,
 				CC930AD9224E47A50064A541 /* WeakContainerTests.swift in Sources */,
+				CC930AE22251288C0064A541 /* ModuleTests.swift in Sources */,
 				CCCF3CAB2226F28B00A7DF69 /* MOA_SwiftTests.swift in Sources */,
 				CCDE4F18224D042A003D0208 /* ApplicationServiceParserTests.swift in Sources */,
+				CC930AE42251397E0064A541 /* DashboardTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,13 +9,19 @@
 import Foundation
 
 internal extension URL {
-    
+	
     init?(schema: String,
           host: String,
           path: String? = nil,
           parameters: [String: String]? = nil) {
-        
-        guard schema.count > 0 else { return nil }
+		
+		guard schema.isValidScheme,
+				host.isValidHostModule else { return nil }
+		
+		if let path = path {
+			guard path.isValidPathModule else { return nil }
+		}
+		
         var components = URLComponents()
 
         components.scheme = schema
@@ -97,8 +103,27 @@ internal extension URLComponents {
 internal extension String {
 	
 	var isValidScheme: Bool {
+		
 		get {
 			guard let regex = try? NSRegularExpression(pattern: "^[A-Za-z][+-.A-Za-z0-9]*$",
+													   options: NSRegularExpression.Options.caseInsensitive) else { return false }
+			return self.match(with: regex)
+		}
+	}
+	
+	var isValidHostModule: Bool {
+		
+		get {
+			guard let regex = try? NSRegularExpression(pattern: "^[A-Za-z][A-Za-z0-9-]*$",
+													   options: NSRegularExpression.Options.caseInsensitive) else { return false }
+			return self.match(with: regex)
+		}
+	}
+	
+	var isValidPathModule: Bool {
+		
+		get {
+			guard let regex = try? NSRegularExpression(pattern: "^[/][A-Za-z0-9-]*$",
 													   options: NSRegularExpression.Options.caseInsensitive) else { return false }
 			return self.match(with: regex)
 		}
