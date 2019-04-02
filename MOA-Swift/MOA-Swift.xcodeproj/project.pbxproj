@@ -13,6 +13,8 @@
 		CC930AE02250F7100064A541 /* ApplicationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADF2250F7100064A541 /* ApplicationRouterTests.swift */; };
 		CC930AE22251288C0064A541 /* ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE12251288C0064A541 /* ModuleTests.swift */; };
 		CC930AE42251397E0064A541 /* DashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE32251397E0064A541 /* DashboardTests.swift */; };
+		CC930AE6225141990064A541 /* VCExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE5225141990064A541 /* VCExtensionsTests.swift */; };
+		CC930AF022514E200064A541 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC930AEF22514E200064A541 /* TestStoryboard.storyboard */; };
 		CCCF3CA62226F28B00A7DF69 /* MOA_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */; };
 		CCCF3CAB2226F28B00A7DF69 /* MOA_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CAA2226F28B00A7DF69 /* MOA_SwiftTests.swift */; };
 		CCCF3CAD2226F28B00A7DF69 /* MOA_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,6 +52,8 @@
 		CC930ADF2250F7100064A541 /* ApplicationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRouterTests.swift; sourceTree = "<group>"; };
 		CC930AE12251288C0064A541 /* ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTests.swift; sourceTree = "<group>"; };
 		CC930AE32251397E0064A541 /* DashboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTests.swift; sourceTree = "<group>"; };
+		CC930AE5225141990064A541 /* VCExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCExtensionsTests.swift; sourceTree = "<group>"; };
+		CC930AEF22514E200064A541 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MOA_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOA_Swift.h; sourceTree = "<group>"; };
 		CCCF3CA02226F28B00A7DF69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				CC930AD8224E47A50064A541 /* WeakContainerTests.swift */,
 				CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */,
 				CC930ADC2250E7080064A541 /* BundleTests.swift */,
+				CC930AE5225141990064A541 /* VCExtensionsTests.swift */,
+				CC930AEF22514E200064A541 /* TestStoryboard.storyboard */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -323,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCDE4F17224D042A003D0208 /* MockPayUseCase.json in Resources */,
+				CC930AF022514E200064A541 /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +359,7 @@
 			files = (
 				CC930ADB224E532C0064A541 /* URLExtensionsTests.swift in Sources */,
 				CC930AE02250F7100064A541 /* ApplicationRouterTests.swift in Sources */,
+				CC930AE6225141990064A541 /* VCExtensionsTests.swift in Sources */,
 				CC930ADD2250E7080064A541 /* BundleTests.swift in Sources */,
 				CCDE4F19224D042A003D0208 /* ApplicationServiceTests.swift in Sources */,
 				CC930AD9224E47A50064A541 /* WeakContainerTests.swift in Sources */,

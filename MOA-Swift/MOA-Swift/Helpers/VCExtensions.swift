@@ -59,5 +59,24 @@ internal extension UIViewController {
             return nil
         }
     }
+	
+	func rootVc() -> UIViewController? {
+		
+		return self.window(for: self.view)?.rootViewController
+	}
+	
+	func window(for view: UIView) -> UIWindow? {
+		
+		if let superview = view.superview as? UIWindow,
+            superview.isKeyWindow == true {
+			return superview
+		}
+		else if let view = view.superview {
+			return window(for: view)
+		}
+		else {
+			return nil
+		}
+	}
 }
 
