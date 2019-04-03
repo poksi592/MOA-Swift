@@ -70,13 +70,13 @@ public protocol WireframeType: class {
     /**
      Function with generic set of parameters. Should be called from `StoryboardModuleType`.
      */
-    func setupWireframe(parameters: ModuleParameters?)
+    func setupWireframe(parameters: ModuleParameters?, bundle: Bundle?)
 }
 
 
 public extension WireframeType {
     
-    func setupWireframe(parameters: ModuleParameters?) {
+    func setupWireframe(parameters: ModuleParameters?, bundle: Bundle? = nil) {
         
         // Guard prevents from initial VC being added again each time `open` function is
         // run from the Module
@@ -85,7 +85,7 @@ public extension WireframeType {
         guard presentedViewControllers.isEmpty else { return }
         
         if let storyboardName = parameters?[ModuleConstants.UrlParameter.storyboard] {
-            storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+            storyboard = UIStoryboard(name: storyboardName, bundle: bundle)
         }
         
         setPresentationMode(from: parameters)
@@ -164,18 +164,15 @@ public extension WireframeType {
             
             func presentableVc() -> UIViewController? {
                 
-                guard let delegate = UIApplication.shared.delegate,
-                    let window = delegate.window,
-					let rootViewController = window?.rootViewController else { return nil }
-                
-                return rootViewController.topmostNavigationController()?.children.last?.topPresentedController() ?? rootViewController.topPresentedController()
+                let topmostVc = viewController.rootVc()?.topmostNavigationController()
+                return topmostVc?.children.last?.topPresentedController() ?? viewController.rootVc()?.topPresentedController()
             }
             
             switch self.presentationMode {
                 
             case .navigationStack:
                 
-                guard let navController = UIViewController.topPresentedController()?.topmostNavigationController() else {
+                guard let navController = viewController.rootVc()?.topmostNavigationController() else {
                     
                     assertionFailure("ModuleHub: attempt to push controller on the top navigation controller failed - no UINavigationController found")
                     return

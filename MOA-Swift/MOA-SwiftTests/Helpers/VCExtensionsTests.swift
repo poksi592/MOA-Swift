@@ -81,6 +81,43 @@ class VCExtensionsTests: XCTestCase {
         
         XCTAssertNil(containerVc?.rootVc())
     }
+    
+    func test_topPresentedControllerIdentical() {
+        
+        let topVc = storyboard?.instantiateViewController(withIdentifier: "topVc")
+        let presentedVc = topVc?.topPresentedController()
+        
+        XCTAssertEqual(presentedVc, topVc)
+    }
+    
+    func test_topPresentedControllerIdenticalPresenting() {
+        
+        let topVc = storyboard?.instantiateViewController(withIdentifier: "topPresentingVc")
+        let presentedVc = topVc?.topPresentedController()
+        
+        XCTAssertEqual(presentedVc, topVc)
+    }
+    
+    func test_topPresentedControllerTheSecondOne() {
+        
+        // Prepare
+        let topVc = storyboard?.instantiateViewController(withIdentifier: "topPresentingVc") as! MockPresentingViewController
+        topVc.view = MockViewWithKeyWindow()
+        let containerVc = storyboard?.instantiateViewController(withIdentifier: "containerVc")
+        containerVc?.view = MockViewWithSuperview(frame: CGRect(x: 1, y: 1, width: 1, height: 1),
+                                                  superview: topVc.view)
+        
+        topVc.presentedVc = containerVc
+        
+        let window = topVc.view.superview as! UIWindow
+        window.rootViewController = topVc
+        
+        // Execute
+        let presentedVc = containerVc!.topPresentedController()
+        
+        // Test
+        XCTAssertEqual(presentedVc, containerVc)
+    }
 }
 
 class MockTopViewController: StoryboardIdentifiableViewController {
@@ -89,6 +126,17 @@ class MockTopViewController: StoryboardIdentifiableViewController {
 
 class MockContainerViewController: StoryboardIdentifiableViewController {
 	
+}
+
+class MockPresentingViewController: StoryboardIdentifiableViewController {
+    
+    weak var presentedVc: UIViewController?
+    
+    override var presentedViewController: UIViewController? {
+        get {
+            return presentedVc
+        }
+    }
 }
 
 class MockViewWithKeyWindow: UIView {

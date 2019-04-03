@@ -11,29 +11,10 @@ import UIKit
 
 internal extension UIViewController {
     
-    class func topPresentedController() -> UIViewController? {
-        
-        let delegate = UIApplication.shared.delegate
-		guard let rootViewController = delegate?.window??.rootViewController else {
-            return nil
-        }
-
-        var topViewController = rootViewController
-        while let presentedViewController = topViewController.presentedViewController{
-            topViewController = presentedViewController
-        }
-        return rootViewController
-    }
-    
     func topPresentedController() -> UIViewController? {
         
-        let delegate = UIApplication.shared.delegate
-        guard let rootViewController = delegate?.window??.rootViewController else {
-            return nil
-        }
-        
-        var topViewController = rootViewController
-        while let presentedViewController = topViewController.presentedViewController{
+        var topViewController = self.rootVc()
+        while let presentedViewController = topViewController?.presentedViewController{
             topViewController = presentedViewController
         }
         return self
