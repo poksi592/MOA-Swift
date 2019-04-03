@@ -196,9 +196,10 @@ public extension WireframeType {
                 
             default:
                 
-                let delegate = UIApplication.shared.delegate
-                delegate?.window??.rootViewController = viewController
-                delegate?.window??.makeKeyAndVisible()
+                if let topmostVc = viewController.rootVc() {
+                    let window = topmostVc.window(for: topmostVc.view)
+                    window?.rootViewController = topmostVc
+                }
             }
         }
     }
