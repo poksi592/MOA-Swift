@@ -53,6 +53,8 @@ enum ValueType {
 internal struct Parser {
     
     struct Keywords {
+        static let servicePrefix = "@@"
+        static let parameterPrefix = "##"
         static let response = "%%response"
         static let serviceParameters = "%%serviceParameters"
         static let open = "%%open"
@@ -85,7 +87,7 @@ public extension ApplicationServiceType {
     var serviceName: String? {
         
         get {
-            return service.keys.first(where: { $0.prefix(2) == "@@" })
+            return service.keys.first(where: { $0.prefix(Parser.Keywords.servicePrefix.count) == Parser.Keywords.servicePrefix })
         }
     }
     
@@ -234,7 +236,7 @@ class ApplicationServiceParser {
             
         }) else { return nil }
         
-        let parametersDictionaryOnly = serviceDictionary.filter({ $0.key.prefix(2) == "##" })
+        let parametersDictionaryOnly = serviceDictionary.filter({ $0.key.prefix(Parser.Keywords.parameterPrefix.count) == Parser.Keywords.parameterPrefix })
         
         return parametersDictionaryOnly.count > 0 ? parametersDictionaryOnly : nil
     }
@@ -328,7 +330,7 @@ class ApplicationServiceParser {
     
     class func isStatementOfServiceParametersAssingments(from dictionary: [String: Any]) -> Bool {
         
-        let serviceParametertStatements = dictionary.filter { $0.key.prefix(2) == "##" }
+        let serviceParametertStatements = dictionary.filter { $0.key.prefix(Parser.Keywords.parameterPrefix.count) == Parser.Keywords.parameterPrefix }
         
         return serviceParametertStatements.count == dictionary.count && dictionary.count != 0
     }
