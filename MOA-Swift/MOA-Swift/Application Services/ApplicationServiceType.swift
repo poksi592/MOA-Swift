@@ -10,7 +10,6 @@ import Foundation
 
 enum ValueType {
     
-    case none
     case int
     case float
     case double
@@ -34,7 +33,7 @@ enum ValueType {
         case is Array<Any>:
             self = .array
         default:
-            self = .none
+            return nil
         }
     }
     
@@ -51,13 +50,27 @@ enum ValueType {
  It's based on execution steps from JSON file, which is passed by initialisation.
  */
 
+internal struct Parser {
+    
+    struct Keywords {
+        static let response = "%%response"
+        static let serviceParameters = "%%serviceParameters"
+        static let open = "%%open"
+        static let callback = "%%callback"
+        static let error = "%%error"
+        static let module = "%%module"
+        static let method = "%%method"
+        static let parameters = "%%parameters"
+    }
+}
+
 public protocol ApplicationServiceType: class {
     
-    var serviceParameters: [String: Any] {get set}
+    var serviceParameters: [String: Any] { get set }
     var service: [String: Any] {get set}
-    var appRouter: ApplicationRouterType {get set}
+    var appRouter: ApplicationRouterType { get set }
     var scheme: String {get set}
-    var serviceName: String? {get}
+    var serviceName: String? { get }
 	var bundle: Bundle { get set }
     
 	init?(jsonFilename: String?, bundle: Bundle)
@@ -65,10 +78,6 @@ public protocol ApplicationServiceType: class {
     func loadService(jsonFilename: String) -> [String: Any]?
     func valid() -> Bool
     func run()
-    
-    func callServiceRecursively(from array: [[String: Any]],
-                                response: [String: Any],
-                                service: () -> ())
 }
 
 public extension ApplicationServiceType {
@@ -83,7 +92,7 @@ public extension ApplicationServiceType {
     func valid() -> Bool {
         
         if service.count == 2,
-            service.keys.contains("%%serviceParameters"),
+            service.keys.contains(Parser.Keywords.serviceParameters),
             let serviceName = self.serviceName,
             let _ = service[serviceName] {
             
@@ -96,22 +105,7 @@ public extension ApplicationServiceType {
 		
 		return bundle.loadJson(filename: jsonFilename)
     }
-    
-    // Calls the service recursivelly again, if it finds it as dictionary in array passed.
-    func callServiceRecursively(from array: [[String: Any]],
-                                response: [String: Any],
-                                service: () -> ()) {
-        
-        guard let serviceName = self.serviceName,
-            let parametersForService = ApplicationServiceParser.getParametersDictionaryForService(from: array,
-                                                                                                  serviceName: serviceName) else { return }
-        serviceParameters = ApplicationServiceParser.getResponseUpdatedServiceParameters(from: parametersForService,
-                                                                                         serviceParameters: serviceParameters,
-                                                                                         response: response)
-        service()
-    }
-    
-    
+
     func run() {
         
         guard let name = self.serviceName,
@@ -143,9 +137,9 @@ public extension ApplicationServiceType {
     func executeOpen(statement: [String: Any]) {
         
         guard ApplicationServiceParser.isStatementOpenModule(from: statement),
-            let url = ApplicationServiceParser.getUrl(from: statement, schema: scheme),
-            let openStatement = statement["%%open"] as? [String: Any],
-            let callback = openStatement["%%callback"] as? [[String: Any]] else { return }
+            let url = ApplicationServiceParser.getUrl(from: statement, scheme: scheme),
+            let openStatement = statement[Parser.Keywords.open] as? [String: Any],
+            let callback = openStatement[Parser.Keywords.callback] as? [[String: Any]] else { return }
         
         appRouter.open(url: url) { (response, data, urlResponse, error) in
             
@@ -159,7 +153,7 @@ public extension ApplicationServiceType {
     func executeError(statement: [String: Any], errorCode: Int) {
         
         guard ApplicationServiceParser.isStatementError(from: statement),
-            let statements = statement["%%error"] as? [String: Any],
+            let statements = statement[Parser.Keywords.error] as? [String: Any],
             let errorMatchedStatements = ApplicationServiceParser.getErrorMatchingStatements(from: statements,
                                                                                              errorCode: errorCode) else { return }
         
@@ -176,9 +170,9 @@ public extension ApplicationServiceType {
                                                                       response: response),
             let statements = statement.first?.value as? [[String: Any]]  else { return }
         
-        self.execute(statements: statements,
-                     response: response,
-                     errorCode: nil)
+        execute(statements: statements,
+                response: response,
+                errorCode: nil)
     }
     
     func executeServiceParametersAssingments(statement: [String: Any], response: [String: Any]) {
@@ -198,25 +192,10 @@ public extension ApplicationServiceType {
         
         if let serviceParameterAssingments = statement.first?.value as? [String: Any] {
             
-            self.executeServiceParametersAssingments(statement: serviceParameterAssingments, response: response)
+            executeServiceParametersAssingments(statement: serviceParameterAssingments, response: response)
         }
         
         run()
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    // Executes the elements within any array, which is representewd by a value of the dictionary with the key that starts with "%%response"
-    // Every dictionary can have only one element
-    func executeResponseParameterStatements(from array: [[String: Any]],
-                                            response: [String: Any]) {
-        
-        
     }
     
     // Assign the values to "##..." service parameters
@@ -278,9 +257,11 @@ class ApplicationServiceParser {
             if ValueType(value)?.isNumber == true {
                 newServiceParameters[key] = value
             }
-            else if valueSplits.first == "%%response" && valueSplits.count == 2  {
+            else if String(valueSplits.first ?? "") == Parser.Keywords.response && valueSplits.count == 2  {
                 
-                newServiceParameters[key] = response[String(valueSplits.last!)]
+                if let lastValue = valueSplits.last {
+                    newServiceParameters[key] = response[String(lastValue)]
+                }
             }
         }
         
@@ -289,14 +270,14 @@ class ApplicationServiceParser {
     
     class func getStatementsWithResponsesOnly(from array: [[String: Any]]) -> [[String: Any]] {
         
-        let responseStatements = array.filter { $0.count == 1}.filter { $0.first?.key.prefix(10) == "%%response" }
+        let responseStatements = array.filter { $0.count == 1 }.filter { String(($0.first?.key.prefix(Parser.Keywords.response.count)) ?? "") == Parser.Keywords.response }
         let matchingResponseStatements = responseStatements.filter { response in
             
-            if response["%%response"] != nil { return true }
+            if response[Parser.Keywords.response] != nil { return true }
             
             guard let responseComponents = response.keys.first?.split(separator: ","),
                 responseStatements.count > 0 else { return false }
-            let responseMatchingKeys = responseComponents.filter { $0.prefix(10) == "%%response" }
+            let responseMatchingKeys = responseComponents.filter { $0.prefix(10) == Parser.Keywords.response }
             guard responseMatchingKeys.count > 0 else { return false }
             
             return true
@@ -304,7 +285,7 @@ class ApplicationServiceParser {
         return matchingResponseStatements
     }
     
-    // Get back only statements that havbe the reponses and they are matching repsonses from parameter dictionary
+    // Get back only statements that have the reponses and they are matching repsonses from parameter dictionary
     class func getResponseMatchingStatements(from array: [[String: Any]],
                                              response: [String: Any]) -> [[String: Any]]? {
         
@@ -322,7 +303,7 @@ class ApplicationServiceParser {
     class func isStatementMatchingAnyResponse(from array: [String: Any],
                                               response: [String: Any]) -> Bool {
         
-        if array["%%response"] != nil { return true }
+        if array[Parser.Keywords.response] != nil { return true }
         
         guard let responseComponents = array.keys.first?.split(separator: ",") else { return false }
         
@@ -362,13 +343,13 @@ class ApplicationServiceParser {
     class func isStatementOpenModule(from dictionary: [String: Any]) -> Bool {
         
         guard dictionary.count == 1,
-            let openParameters = dictionary["%%open"] as? [String: Any],
+            let openParameters = dictionary[Parser.Keywords.open] as? [String: Any],
             openParameters.count > 2 && openParameters.count <= 4,
-            let _ = openParameters["%%module"],
-            let _ = openParameters["%%method"],
-            let _ = openParameters["%%callback"] else { return false }
+            let _ = openParameters[Parser.Keywords.module],
+            let _ = openParameters[Parser.Keywords.method],
+            let _ = openParameters[Parser.Keywords.callback] else { return false }
         
-        if let parameters = openParameters["%%parameters"] as? [String: Any],
+        if let parameters = openParameters[Parser.Keywords.parameters] as? [String: Any],
             parameters.count == 0 {
             
             return false
@@ -380,7 +361,7 @@ class ApplicationServiceParser {
     class func isStatementError(from dictionary: [String: Any]) -> Bool {
         
         if dictionary.count == 1,
-            let _ = dictionary["%%error"] as? [String: Any] {
+            let _ = dictionary[Parser.Keywords.error] as? [String: Any] {
             
             return true
         } else {
@@ -390,17 +371,17 @@ class ApplicationServiceParser {
     
     // MARK:
     
-    class func getUrl(from openStatement: [String: Any], schema: String) -> URL? {
+    class func getUrl(from openStatement: [String: Any], scheme: String) -> URL? {
         
         if ApplicationServiceParser.isStatementOpenModule(from: openStatement),
-            let statement = openStatement["%%open"] as? [String: Any],
-            let host = statement["%%module"] as? String,
-            let path = statement["%%method"] as? String {
+            let statement = openStatement[Parser.Keywords.open] as? [String: Any],
+            let host = statement[Parser.Keywords.module] as? String,
+            let path = statement[Parser.Keywords.method] as? String {
             
-            return URL(schema: schema,
+            return URL(scheme: scheme,
                        host: host,
                        path: path,
-                       parameters: statement["%%parameters"] as? [String: String])
+                       parameters: statement[Parser.Keywords.parameters] as? [String: String])
         }
         return nil
     }

@@ -14,7 +14,7 @@ class ApplicationRouterTests: XCTestCase {
 	func test_openWithPath() {
 		
 		// Prepare
-		let url = URL(schema: "testScheme",
+		let url = URL(scheme: "testScheme",
 					  host: "login",
 					  path: "/payment-token",
 					  parameters: ["parameterKey": "parameterValue"])

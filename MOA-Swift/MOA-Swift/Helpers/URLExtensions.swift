@@ -10,13 +10,13 @@ import Foundation
 
 internal extension URL {
 	
-    init?(schema: String,
+    init?(scheme: String,
           host: String,
           path: String? = nil,
           parameters: [String: String]? = nil) {
 		
-		guard schema.isValidScheme,
-				host.isValidHostModule else { return nil }
+		guard scheme.isValidSchemeName,
+				host.isValidHostName else { return nil }
 		
 		if let path = path {
 			guard path.isValidPathModule else { return nil }
@@ -24,7 +24,7 @@ internal extension URL {
 		
         var components = URLComponents()
 
-        components.scheme = schema
+        components.scheme = scheme
         components.host = host
         components.path = path ?? ""
         
@@ -58,7 +58,7 @@ internal extension URL {
         }
     }
     
-    func containsInAppSchema(for bundle: Bundle? = Bundle.main) -> Bool {
+    func containsInAppScheme(for bundle: Bundle? = Bundle.main) -> Bool {
         
         guard let schemes = bundle?.urlSchemes else {
             return false
@@ -68,7 +68,7 @@ internal extension URL {
                 
                 return false
         }
-        return schemes.filter { $0 == scheme }.count > 0
+        return schemes.contains(scheme)
     }
     
     var isHttpAddress: Bool {
@@ -102,7 +102,7 @@ internal extension URLComponents {
 
 internal extension String {
 	
-	var isValidScheme: Bool {
+	var isValidSchemeName: Bool {
 		
 		get {
 			guard let regex = try? NSRegularExpression(pattern: "^[A-Za-z][+-.A-Za-z0-9]*$",
@@ -111,7 +111,7 @@ internal extension String {
 		}
 	}
 	
-	var isValidHostModule: Bool {
+	var isValidHostName: Bool {
 		
 		get {
 			guard let regex = try? NSRegularExpression(pattern: "^[A-Za-z][A-Za-z0-9-]*$",

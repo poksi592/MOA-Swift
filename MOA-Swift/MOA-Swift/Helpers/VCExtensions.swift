@@ -14,7 +14,7 @@ internal extension UIViewController {
     func topPresentedController() -> UIViewController? {
         
         var topViewController = self.rootVc()
-        while let presentedViewController = topViewController?.presentedViewController{
+        while let presentedViewController = topViewController?.presentedViewController {
             topViewController = presentedViewController
         }
         return self

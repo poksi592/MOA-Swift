@@ -75,9 +75,9 @@ public class URLRouter: URLProtocol, URLSessionDataDelegate, URLSessionTaskDeleg
     
 	override public class func canInit(with task: URLSessionTask) -> Bool {
         
-        // Check if there's internal app schema that matches the one in the URL
+        // Check if there's internal app scheme that matches the one in the URL
         guard let url = task.originalRequest?.url,
-            url.containsInAppSchema() else {
+            url.containsInAppScheme() else {
                 return false
         }
         

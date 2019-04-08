@@ -1,34 +1,34 @@
 {
-    "%%serviceParameters": [
+    Parser.Keywords.serviceParameters: [
         "##amount",
         "##paymentToken"
     ],
     "@@pay": [
         {
-            "%%open": {
-                "%%module": "payments",
-                "%%method": "/pay",
-                "%%parameters": {
+            Parser.Keyword.open: {
+                Parser.Keywords.module: "payments",
+                Parser.Keywords.method: "/pay",
+                Parser.Keywords.parameters: {
                     "amount": "##amount",
                     "token": "##paymentToken",
                     "presentationMode": "navigationStack",
                     "viewController": "PaymentsViewControllerId"
                 },
-                "%%callback": [
+                Parser.Keywords.callback: [
                     {
-                        "%%error": {
+                        Parser.Keywords.error: {
                             "401,500": [
                                 {
-                                    "%%open": {
-                                        "%%module": "login",
-                                        "%%method": "/payment-token",
-                                        "%%parameters": {
+                                    Parser.Keyword.open: {
+                                        Parser.Keywords.module: "login",
+                                        Parser.Keywords.method: "/payment-token",
+                                        Parser.Keywords.parameters: {
                                             "amount": "##amount",
                                             "token": "##paymentToken",
                                             "presentationMode": "modal",
                                             "viewController": "LoginViewControllerId"
                                         },
-                                        "%%callback": [
+                                        Parser.Keywords.callback: [
                                             {
                                                 "%%response.paymentToken": [
                                                     {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CC4F11852254D733009B3FE1 /* WireframeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4F11842254D733009B3FE1 /* WireframeTypeTests.swift */; };
 		CC4F11872254DCC4009B3FE1 /* MockStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC4F11862254DCC4009B3FE1 /* MockStoryboard.storyboard */; };
+		CC4F118A225B70CB009B3FE1 /* Dashboard.json in Resources */ = {isa = PBXBuildFile; fileRef = CC4F1188225B70CA009B3FE1 /* Dashboard.json */; };
+		CC4F118B225B70CB009B3FE1 /* Dashboard2.json in Resources */ = {isa = PBXBuildFile; fileRef = CC4F1189225B70CB009B3FE1 /* Dashboard2.json */; };
 		CC930AD9224E47A50064A541 /* WeakContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AD8224E47A50064A541 /* WeakContainerTests.swift */; };
 		CC930ADB224E532C0064A541 /* URLExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */; };
 		CC930ADD2250E7080064A541 /* BundleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930ADC2250E7080064A541 /* BundleTests.swift */; };
@@ -25,8 +27,6 @@
 		CCCF3CBC2226F3E400A7DF69 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CB92226F3E300A7DF69 /* Module.swift */; };
 		CCCF3CBE2226F3F000A7DF69 /* ApplicationServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CBD2226F3EF00A7DF69 /* ApplicationServiceType.swift */; };
 		CCCF3CC42226F6B900A7DF69 /* ServiceExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CC32226F6B900A7DF69 /* ServiceExample.swift */; };
-		CCCF3CC82226F7D800A7DF69 /* Dashboard2.json in Resources */ = {isa = PBXBuildFile; fileRef = CCCF3CC52226F7D800A7DF69 /* Dashboard2.json */; };
-		CCCF3CC92226F7D800A7DF69 /* Dashboard.json in Resources */ = {isa = PBXBuildFile; fileRef = CCCF3CC62226F7D800A7DF69 /* Dashboard.json */; };
 		CCCF3CCA2226F7D800A7DF69 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CC72226F7D800A7DF69 /* Dashboard.swift */; };
 		CCCF3CD1222729DB00A7DF69 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCC222729DB00A7DF69 /* URLExtensions.swift */; };
 		CCCF3CD2222729DB00A7DF69 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCD222729DB00A7DF69 /* Bundle.swift */; };
@@ -50,6 +50,8 @@
 /* Begin PBXFileReference section */
 		CC4F11842254D733009B3FE1 /* WireframeTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireframeTypeTests.swift; sourceTree = "<group>"; };
 		CC4F11862254DCC4009B3FE1 /* MockStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MockStoryboard.storyboard; sourceTree = "<group>"; };
+		CC4F1188225B70CA009B3FE1 /* Dashboard.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dashboard.json; sourceTree = "<group>"; };
+		CC4F1189225B70CB009B3FE1 /* Dashboard2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dashboard2.json; sourceTree = "<group>"; };
 		CC930AD8224E47A50064A541 /* WeakContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakContainerTests.swift; sourceTree = "<group>"; };
 		CC930ADA224E532C0064A541 /* URLExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensionsTests.swift; sourceTree = "<group>"; };
 		CC930ADC2250E7080064A541 /* BundleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleTests.swift; sourceTree = "<group>"; };
@@ -69,8 +71,6 @@
 		CCCF3CB92226F3E300A7DF69 /* Module.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		CCCF3CBD2226F3EF00A7DF69 /* ApplicationServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationServiceType.swift; sourceTree = "<group>"; };
 		CCCF3CC32226F6B900A7DF69 /* ServiceExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceExample.swift; sourceTree = "<group>"; };
-		CCCF3CC52226F7D800A7DF69 /* Dashboard2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dashboard2.json; sourceTree = "<group>"; };
-		CCCF3CC62226F7D800A7DF69 /* Dashboard.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Dashboard.json; sourceTree = "<group>"; };
 		CCCF3CC72226F7D800A7DF69 /* Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		CCCF3CCC222729DB00A7DF69 /* URLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		CCCF3CCD222729DB00A7DF69 /* Bundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -204,9 +204,9 @@
 		CCCF3CC22226F68200A7DF69 /* Dynamic Services */ = {
 			isa = PBXGroup;
 			children = (
+				CC4F1188225B70CA009B3FE1 /* Dashboard.json */,
+				CC4F1189225B70CB009B3FE1 /* Dashboard2.json */,
 				CCCF3CC72226F7D800A7DF69 /* Dashboard.swift */,
-				CCCF3CC62226F7D800A7DF69 /* Dashboard.json */,
-				CCCF3CC52226F7D800A7DF69 /* Dashboard2.json */,
 			);
 			path = "Dynamic Services";
 			sourceTree = "<group>";
@@ -325,8 +325,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCCF3CC92226F7D800A7DF69 /* Dashboard.json in Resources */,
-				CCCF3CC82226F7D800A7DF69 /* Dashboard2.json in Resources */,
+				CC4F118A225B70CB009B3FE1 /* Dashboard.json in Resources */,
+				CC4F118B225B70CB009B3FE1 /* Dashboard2.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

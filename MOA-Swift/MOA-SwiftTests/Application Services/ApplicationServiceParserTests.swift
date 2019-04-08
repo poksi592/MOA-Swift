@@ -186,7 +186,7 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let array = [
-            ["%%response":
+            [Parser.Keywords.response:
                 ["paymentToken": "%%response.paymentToken"]
             ]
         ]
@@ -473,10 +473,10 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements =
-            ["%%open":
-                ["%%module": "module-name",
-                 "%%method": "module-name",
-                 "%%callback": ["paymentToken": "%%response.paymentToken"
+            [Parser.Keywords.open:
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name",
+                 Parser.Keywords.callback: ["paymentToken": "%%response.paymentToken"
                 ]
             ],
             "%%another-parameter":
@@ -494,10 +494,10 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements =
-            ["%%open":
-                ["%%module": "module-name",
-                 "%%method": "module-name",
-                 "%%callback": ["paymentToken", "%%response.paymentToken"
+            [Parser.Keywords.open:
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name",
+                 Parser.Keywords.callback: ["paymentToken", "%%response.paymentToken"
                     ]
                 ]
             ]
@@ -514,9 +514,9 @@ class ServiceParserTests: XCTestCase {
         // Prepare
         let statements =
             ["%%no-open":
-                ["%%module": "module-name",
-                 "%%method": "module-name",
-                 "%%callback": ["paymentToken", "%%response.paymentToken"
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name",
+                 Parser.Keywords.callback: ["paymentToken", "%%response.paymentToken"
                     ]
                 ]
         ]
@@ -532,9 +532,9 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements =
-            ["%%open":
-                ["%%module": "module-name",
-                 "%%method": "module-name"
+            [Parser.Keywords.open:
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name"
                 ]
         ]
         
@@ -549,11 +549,11 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements =
-            ["%%open":
-                ["%%module": "module-name",
-                 "%%method": "module-name",
-                 "%%callback": ["paymentToken","%%response.paymentToken"],
-                 "%%parameters": ["paymentToken": "%%response.paymentToken"]
+            [Parser.Keywords.open:
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name",
+                 Parser.Keywords.callback: ["paymentToken","%%response.paymentToken"],
+                 Parser.Keywords.parameters: ["paymentToken": "%%response.paymentToken"]
                 ]
         ]
         
@@ -580,10 +580,10 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements =
-            ["%%error":
-                ["%%module": "module-name",
-                 "%%method": "module-name",
-                 "%%callback": ["paymentToken": "%%response.paymentToken"
+            [Parser.Keywords.error:
+                [Parser.Keywords.module: "module-name",
+                 Parser.Keywords.method: "module-name",
+                 Parser.Keywords.callback: ["paymentToken": "%%response.paymentToken"
                     ]
                 ],
              "%%another-parameter":
@@ -601,7 +601,7 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements = [
-                            "%%error":
+                            Parser.Keywords.error:
                                 ["401", "500"]
                          ]
         
@@ -616,7 +616,7 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements = [
-            "%%error":
+            Parser.Keywords.error:
                 ["401,500":  ["paymentToken": "%%response.paymentToken"],
                  "403":  ["paymentToken": "%%response.paymentToken"]
                 ]
@@ -637,7 +637,7 @@ class ServiceParserTests: XCTestCase {
         let statements = [String: Any]()
         
         // Execute
-        let result = ApplicationServiceParser.getUrl(from: statements, schema: "yourbank")
+        let result = ApplicationServiceParser.getUrl(from: statements, scheme: "yourbank")
         
         // Test
         XCTAssertNil(result)
@@ -646,42 +646,42 @@ class ServiceParserTests: XCTestCase {
     func test_getUrl_validStatements() {
         
         // Prepare
-        let statements: [String : Any] = ["%%open":
-                                            ["%%module": "payments",
-                                            "%%method": "/pay",
-                                            "%%parameters": [
+        let statements: [String : Any] = [Parser.Keywords.open:
+                                            [Parser.Keywords.module: "payments",
+                                            Parser.Keywords.method: "/pay",
+                                            Parser.Keywords.parameters: [
                                                 "amount": "##amount",
                                                 "token": "##paymentToken",
                                                 "presentationMode": "navigationStack",
                                                 "viewController": "PaymentsViewControllerId"
                                             ],
-                                            "%%callback": [:]]
+                                            Parser.Keywords.callback: [:]]
                                           ]
         
         // Execute
-        let result = ApplicationServiceParser.getUrl(from: statements, schema: "yourbank")
+        let result = ApplicationServiceParser.getUrl(from: statements, scheme: "yourbank")
         
         // Test
         XCTAssertNotNil(result)
     }
     
-    func test_getUrl_validStatements_noSchema() {
+    func test_getUrl_validStatements_noScheme() {
         
         // Prepare
-        let statements: [String : Any] = ["%%open":
-            ["%%module": "payments",
-             "%%method": "/pay",
-             "%%parameters": [
+        let statements: [String : Any] = [Parser.Keywords.open:
+            [Parser.Keywords.module: "payments",
+             Parser.Keywords.method: "/pay",
+             Parser.Keywords.parameters: [
                 "amount": "##amount",
                 "token": "##paymentToken",
                 "presentationMode": "navigationStack",
                 "viewController": "PaymentsViewControllerId"
                 ],
-            "%%callback": [:]]
+            Parser.Keywords.callback: [:]]
         ]
         
         // Execute
-        let result = ApplicationServiceParser.getUrl(from: statements, schema: "")
+        let result = ApplicationServiceParser.getUrl(from: statements, scheme: "")
         
         // Test
         XCTAssertNil(result)
@@ -691,19 +691,19 @@ class ServiceParserTests: XCTestCase {
         
         // Prepare
         let statements: [String : Any] = ["%%no-open":
-            ["%%module": "payments",
-             "%%method": "/pay",
-             "%%parameters": [
+            [Parser.Keywords.module: "payments",
+             Parser.Keywords.method: "/pay",
+             Parser.Keywords.parameters: [
                 "amount": "##amount",
                 "token": "##paymentToken",
                 "presentationMode": "navigationStack",
                 "viewController": "PaymentsViewControllerId"
                 ],
-             "%%callback": [:]]
+             Parser.Keywords.callback: [:]]
         ]
         
         // Execute
-        let result = ApplicationServiceParser.getUrl(from: statements, schema: "yourbank")
+        let result = ApplicationServiceParser.getUrl(from: statements, scheme: "yourbank")
         
         // Test
         XCTAssertNil(result)
@@ -712,14 +712,14 @@ class ServiceParserTests: XCTestCase {
     func test_getUrl_noParameters() {
         
         // Prepare
-        let statements: [String : Any] = ["%%open":
-            ["%%module": "payments",
-             "%%method": "/pay",
-             "%%callback": [:]]
+        let statements: [String : Any] = [Parser.Keywords.open:
+            [Parser.Keywords.module: "payments",
+             Parser.Keywords.method: "/pay",
+             Parser.Keywords.callback: [:]]
         ]
         
         // Execute
-        let result = ApplicationServiceParser.getUrl(from: statements, schema: "yourbank")
+        let result = ApplicationServiceParser.getUrl(from: statements, scheme: "yourbank")
         
         // Test
         XCTAssertNotNil(result)

@@ -35,7 +35,7 @@ internal extension Bundle {
         let url = URL(fileURLWithPath: filepath)
         guard let data = try? Data(contentsOf: url),
             let deserialised = try? JSONSerialization.jsonObject(with: data,
-                                                                 options: JSONSerialization.ReadingOptions.allowFragments),
+                                                                 options: .allowFragments),
             let serviceDictionary = deserialised as? [String: Any] else { return nil }
 
         return serviceDictionary
