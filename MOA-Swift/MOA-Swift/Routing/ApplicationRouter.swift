@@ -36,8 +36,8 @@ public extension ApplicationRouterType {
                 return
         }
         
-        guard let module = instantiatedModules.filter({ $0.route == route }).first,
-            let path = module.paths.filter({ $0 == url.path }).first else {
+        guard let module = instantiatedModules.first(where: { $0.route == route }),
+            let path = module.paths.first(where: { $0 == url.path }) else {
                 
                 assertionFailure("Wrong host or/and path")
                 return
@@ -82,8 +82,8 @@ public class URLRouter: URLProtocol, URLSessionDataDelegate, URLSessionTaskDeleg
         }
         
         // Check if there's a path in the module that matches the one in the URL
-        guard let module = ApplicationRouter.shared.instantiatedModules.filter({ $0.route == task.originalRequest?.url?.host }).first,
-            let _ = module.paths.filter({ $0 == task.originalRequest?.url?.path }).first else {
+        guard let module = ApplicationRouter.shared.instantiatedModules.first(where: { $0.route == task.originalRequest?.url?.host }),
+            let _ = module.paths.first(where: { $0 == task.originalRequest?.url?.path }) else {
                 return false
         }
         return true
