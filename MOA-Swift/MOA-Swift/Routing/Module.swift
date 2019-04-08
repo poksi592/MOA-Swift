@@ -141,23 +141,17 @@ public extension ModuleType {
     
     func open(parameters: ModuleParameters?, path: String?, callback: ModuleCallback?) {
         
-        let subscribedRoutableTypes = subscribedRoutables.filter { subscribedType in
+        guard let subscribedRoutableType = subscribedRoutables.first(where: { subscribedType in
             
-            let matchedType = subscribedType.getPaths().filter { $0 == path }
-            if matchedType.isEmpty == false {
-                return true
-            }
-            else {
-                return false
-            }
-        }
+            let matchedType = subscribedType.getPaths().first(where: { $0 == path })
+            return matchedType != nil
+        }) else { return }
         
-        guard let subscribedRoutableType = subscribedRoutableTypes.first else { return }
-        let routables: [WeakContainer<ModuleRoutable>] = instantiatedRoutables.filter { routable in
+        var routable = instantiatedRoutables.first(where: { routable in
             
             return subscribedRoutableType == type(of: routable.value!)
-        }
-        if let routable = routables.first?.value {
+        })
+        if let routable = routable?.value {
             routable.route(parameters: parameters,
                            path: path,
                            callback: callback)

@@ -76,7 +76,7 @@ public extension ApplicationServiceType {
     var serviceName: String? {
         
         get {
-            return service.keys.filter { $0.prefix(2) == "@@" }.first
+            return service.keys.first(where: { $0.prefix(2) == "@@" })
         }
     }
     
