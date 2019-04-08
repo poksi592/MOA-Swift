@@ -188,7 +188,7 @@ public extension ApplicationServiceType {
     func executeServiceRecursively(statement: [String: Any], response: [String: Any]) {
         
         guard let serviceName = serviceName,
-            ApplicationServiceParser.isStatementRecursedServiceCall(from: statement, serviceName: serviceName) == true  else { return }
+            ApplicationServiceParser.isStatementRecursedServiceCall(from: statement, serviceName: serviceName) else { return }
         
         if let serviceParameterAssingments = statement.first?.value as? [String: Any] {
             
@@ -226,8 +226,8 @@ class ApplicationServiceParser {
         guard let serviceDictionary = array.reduce([String: Any](), { (current, dict) -> [String: Any]? in
             
             guard dict.count == 1,
-                let serviceDict = dict.first?.key,
-                serviceDict == serviceName else {
+                let dictFirstKey = dict.first?.key,
+                dictFirstKey == serviceName else {
                     return nil
             }
             return dict[serviceName] as? [String: Any]
