@@ -62,6 +62,8 @@ public class ApplicationRouter: ApplicationRouterType {
     
     // We instantiate Modules and add them to the array here...
 	public var instantiatedModules: [ModuleType] = []
+    
+    public init() {}
 }
 
 @objc
