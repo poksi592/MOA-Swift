@@ -122,7 +122,7 @@ public protocol ModuleType: class {
      This array contains all the potential types module can let to route to.
      Reflection is used for memory savvy approach
      */
-    var subscribedRoutables: [ModuleRoutable.Type] { get set }
+    var subscribedRoutables: [ModuleRoutable.Type] { get }
     var instantiatedRoutables: [WeakContainer<ModuleRoutable>] { get set }
     
     /**
