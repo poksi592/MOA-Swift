@@ -58,7 +58,7 @@ public class ApplicationRouter: ApplicationRouterType {
 	private (set) public var moduleQueue = DispatchQueue(label: "com.yourapp.module.queue")
     
     // ApplicationRouter is a singleton, because it makes it easier to be accessed from anywhere to access its functions/services
-    static let shared = ApplicationRouter()
+    public static let shared = ApplicationRouter()
     
     // We instantiate Modules and add them to the array here...
 	public var instantiatedModules: [ModuleType] = []
