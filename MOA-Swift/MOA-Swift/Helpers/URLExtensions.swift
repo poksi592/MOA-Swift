@@ -8,12 +8,12 @@
 
 import Foundation
 
-internal extension URL {
+public extension URL {
 	
     init?(scheme: String,
-          host: String,
-          path: String? = nil,
-          parameters: [String: String]? = nil) {
+                 host: String,
+                 path: String? = nil,
+                 parameters: [String: String]? = nil) {
 		
 		guard scheme.isValidSchemeName,
 				host.isValidHostName else { return nil }
