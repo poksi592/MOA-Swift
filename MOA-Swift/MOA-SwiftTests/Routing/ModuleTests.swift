@@ -156,7 +156,7 @@ class ModuleTests: XCTestCase {
 										  headerFields: nil)
 		let responseError = ResponseError(error: nil, response: urlResponse, code: nil)
 		
-		if case .badRequest400(let _) = responseError! {
+		if case .badRequest400(_) = responseError! {
 			XCTAssert(true)
 		}
 		else {

@@ -56,7 +56,7 @@ public enum ResponseError: Error {
         }
     }
     
-    init?(error: Error?, response: HTTPURLResponse?, code: Int? = nil) {
+    public init?(error: Error?, response: HTTPURLResponse?, code: Int? = nil) {
         
         let responseCode: Int
         if let response = response {
