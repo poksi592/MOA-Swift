@@ -134,12 +134,16 @@ public protocol ModuleType: class {
      */
     func open(parameters: ModuleParameters?,
               path: String?,
+              injectedObjects: [String: Any]?,
               callback: ModuleCallback?)
 }
 
 public extension ModuleType {
     
-    func open(parameters: ModuleParameters?, path: String?, callback: ModuleCallback?) {
+    func open(parameters: ModuleParameters?,
+              path: String?,
+              injectedObjects: [String: Any]? = nil,
+              callback: ModuleCallback?) {
         
         guard let subscribedRoutableType = subscribedRoutables.first(where: { subscribedType in
             
@@ -147,21 +151,33 @@ public extension ModuleType {
             return matchedType != nil
         }) else { return }
         
+        // Flush empty weak containers in 'instantiatedRoutables'
+        instantiatedRoutables = instantiatedRoutables.map { routable in
+            if routable.value == nil {
+                return nil
+            }
+            else {
+                return routable
+            }
+        }.compactMap { $0 }
+        
         var routable = instantiatedRoutables.first(where: { routable in
-            
             return subscribedRoutableType == type(of: routable.value!)
         })
+        
         if let routable = routable?.value {
             routable.route(parameters: parameters,
                            path: path,
+                           injectedObjects: injectedObjects,
                            callback: callback)
         }
         else {
             let routable = subscribedRoutableType.routable()
             instantiatedRoutables.append(WeakContainer(value: routable))
             routable.route(parameters: parameters,
-                            path: path,
-                            callback: callback)
+                           path: path,
+                           injectedObjects: injectedObjects,
+                           callback: callback)
         }
     }
 }
@@ -188,6 +204,7 @@ public protocol ModuleRoutable: class {
     
     func route(parameters: ModuleParameters?,
                path: String?,
+               injectedObjects: [String: Any]?,
                callback: ModuleCallback?)
 }
 

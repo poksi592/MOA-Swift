@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias ModuleCallback = ([String: Any]?, Data?, URLResponse?, ResponseError?) -> Void
+public typealias ModuleCallback = ([String: Any]?, URLResponse?, ResponseError?) -> Void
 
 /**
  Protocol defines application router, which function is
@@ -23,12 +23,14 @@ public protocol ApplicationRouterType: class {
     var moduleQueue: DispatchQueue { get }
     
     func open(url: URL,
+              injectedObjects: [String: Any]?,
               callback: ModuleCallback?)
 }
 
 public extension ApplicationRouterType {
     
     func open(url: URL,
+              injectedObjects: [String: Any]? = nil,
               callback: ModuleCallback?) {
         
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
@@ -43,9 +45,13 @@ public extension ApplicationRouterType {
                 return
         }
         
-        module.open(parameters: components.queryItemsDictionary, path: path) { (response, data, urlResponse, error) in
+        var parameters = components.queryItemsDictionary
+        parameters?["url"] = url.absoluteString
+        module.open(parameters: parameters,
+                    path: path,
+                    injectedObjects: injectedObjects) { (response, urlResponse, error) in
             
-            callback?(response, data, urlResponse, error)
+            callback?(response, urlResponse, error)
         }
         
     }
@@ -102,7 +108,7 @@ public class URLRouter: URLProtocol, URLSessionDataDelegate, URLSessionTaskDeleg
             return
         }
         
-        ApplicationRouter.shared.open(url: url) { (response, data, urlResponse, error) in
+        ApplicationRouter.shared.open(url: url) { (response, urlResponse, error) in
             
             // TODO: Calling URLSessionDataDelegate methods to return the response
         }

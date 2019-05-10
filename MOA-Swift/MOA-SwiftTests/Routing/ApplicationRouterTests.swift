@@ -23,7 +23,7 @@ class ApplicationRouterTests: XCTestCase {
 		
 		// Execute and Test
 		let expectationOpen = expectation(description: "expectationOpen")
-		router.open(url: url!) { (response, data, urlResponse, responseError) in
+		router.open(url: url!) { (response, urlResponse, responseError) in
 			
 			let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
 			XCTAssertTrue(routable.spyRoute)
@@ -31,7 +31,48 @@ class ApplicationRouterTests: XCTestCase {
 		}
 		waitForExpectations(timeout: 2, handler: nil)
 	}
-
+    
+    func test_openWithInjectedObject() {
+        
+        // Prepare
+        let url = URL(scheme: "testScheme",
+                      host: "login",
+                      path: "/payment-token",
+                      parameters: ["parameterKey": "parameterValue"])
+        let router = ApplicationRouter()
+        router.instantiatedModules = [MockLoginModule()]
+        
+        // Execute and Test
+        let expectationOpen = expectation(description: "expectationOpen")
+        router.open(url: url!, injectedObjects: ["inject": "me"]) { (response, urlResponse, responseError) in
+            
+            let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
+            XCTAssertTrue(routable.spyInjectedObject)
+            expectationOpen.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+    
+    func test_openWithAddedUrlParameter() {
+        
+        // Prepare
+        let url = URL(scheme: "testScheme",
+                      host: "login",
+                      path: "/payment-token",
+                      parameters: ["parameterKey": "parameterValue"])
+        let router = ApplicationRouter()
+        router.instantiatedModules = [MockLoginModule()]
+        
+        // Execute and Test
+        let expectationOpen = expectation(description: "expectationOpen")
+        router.open(url: url!) { (response, urlResponse, responseError) in
+            
+            let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
+            XCTAssertTrue(routable.spyUrlParameterPassed)
+            expectationOpen.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+    }
 }
 
 //class MockTestModule: ModuleType {

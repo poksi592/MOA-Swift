@@ -138,16 +138,6 @@ class ApplicationServiceTests: XCTestCase {
         mockPayUseCase.run()
 		
     }
-	
-	func test_loadService() {
-
-		let array = mockPayUseCase.loadService(jsonFilename: "MockPayUseCase")
-
-		XCTAssertNotNil(array)
-	}
-	
-    
-    
 }
 
 class MockPayUseCase: ApplicationServiceType {
@@ -169,10 +159,12 @@ class MockPayUseCase: ApplicationServiceType {
     func valid() -> Bool {
         return true
     }
+    
+    
 }
 
 class MockLoginModule: ModuleType {
-	
+
 	func setup(parameters: ModuleParameters?) {}
 	
 	var route: String = {
@@ -201,12 +193,15 @@ class MockPaymentsModule: ModuleType {
 	
 	var subscribedRoutables: [ModuleRoutable.Type] = [MockRoutable.self]
 	var instantiatedRoutables: [WeakContainer<ModuleRoutable>] = []
+    var retainedRoutables: [ModuleRoutable] = []
 }
 
 
 class MockRoutable: ModuleRoutable {
-	
+
 	var spyRoute = false
+    var spyInjectedObject = false
+    var spyUrlParameterPassed = false
 	
 	required init() {}
 	
@@ -219,8 +214,12 @@ class MockRoutable: ModuleRoutable {
 		return self.init()
 	}
 	
-	func route(parameters: ModuleParameters?, path: String?, callback: ModuleCallback?) {
+	func route(parameters: ModuleParameters?, path: String?, injectedObjects: [String : Any]?, callback: ModuleCallback?) {
 		spyRoute = true
-		callback!(nil,nil,nil,nil)
+        if injectedObjects != nil { spyInjectedObject = true }
+        if let _ = parameters?["url"] {
+            spyUrlParameterPassed = true
+        }
+		callback!(nil,nil,nil)
 	}
 }

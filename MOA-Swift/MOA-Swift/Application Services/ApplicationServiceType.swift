@@ -143,7 +143,7 @@ public extension ApplicationServiceType {
             let openStatement = statement[Parser.Keywords.open] as? [String: Any],
             let callback = openStatement[Parser.Keywords.callback] as? [[String: Any]] else { return }
         
-        appRouter.open(url: url) { (response, data, urlResponse, error) in
+        appRouter.open(url: url) { (response, urlResponse, error) in
             
             if callback.count > 0 {
                 self.execute(statements: callback, response: response, errorCode: error?.errorCode)

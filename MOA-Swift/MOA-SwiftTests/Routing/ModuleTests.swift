@@ -18,7 +18,7 @@ class ModuleTests: XCTestCase {
 		
 		// Execute and Test
 		let expectationOpen = expectation(description: "expectationOpen")
-		loginModule.open(parameters: nil, path: "/payment-token") { (response, data, urlResponse, error) in
+		loginModule.open(parameters: nil, path: "/payment-token") { (response, urlResponse, error) in
 			
 			let routable = loginModule.instantiatedRoutables.first?.value as! MockRoutable
 			XCTAssertTrue(routable.spyRoute)
@@ -34,7 +34,7 @@ class ModuleTests: XCTestCase {
 		
 		// Execute and Test
 		let expectationOpen = expectation(description: "expectationOpen")
-		loginModule.open(parameters: nil, path: "/payment-token") { (response, data, urlResponse, error) in
+		loginModule.open(parameters: nil, path: "/payment-token") { (response, urlResponse, error) in
 			
 			let routables = loginModule.instantiatedRoutables
 			XCTAssertNotNil(routables)
@@ -172,5 +172,33 @@ class ModuleTests: XCTestCase {
 		XCTAssertEqual(responseError?.errorCode!, 401)
 	}
 	
+    func test_flushingEmptyInstantiatedRoutablesWeakContainer() {
+        
+        // Prepare
+        let loginModule = MockLoginModule()
+        
+        // Execute First time and Test
+        let expectationOpen1 = expectation(description: "expectationOpen")
+        loginModule.open(parameters: nil, path: "/payment-token") { (response, urlResponse, error) in
+            
+            let routables = loginModule.instantiatedRoutables
+            XCTAssertEqual(routables.count, 1)
+            expectationOpen1.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+        
+        // Execute Second time and Test
+        let expectationOpen2 = expectation(description: "expectationOpen")
+        loginModule.open(parameters: nil, path: "/payment-token") { (response, urlResponse, error) in
+            
+            let routables = loginModule.instantiatedRoutables
+            XCTAssertEqual(routables.count, 1)
+            expectationOpen2.fulfill()
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+        
+        XCTAssertEqual(loginModule.instantiatedRoutables.count, 1)
+        XCTAssertNil(loginModule.instantiatedRoutables.first?.value)
+    }
 	
 }
