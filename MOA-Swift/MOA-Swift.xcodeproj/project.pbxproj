@@ -19,6 +19,8 @@
 		CC930AE42251397E0064A541 /* DashboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE32251397E0064A541 /* DashboardTests.swift */; };
 		CC930AE6225141990064A541 /* VCExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC930AE5225141990064A541 /* VCExtensionsTests.swift */; };
 		CC930AF022514E200064A541 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC930AEF22514E200064A541 /* TestStoryboard.storyboard */; };
+		CCB702EC229FF13D005B2E0B /* VCNavigatonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB702EB229FF13D005B2E0B /* VCNavigatonExtensions.swift */; };
+		CCB702EE229FF53E005B2E0B /* VCNavigatonExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB702ED229FF53E005B2E0B /* VCNavigatonExtensionsTests.swift */; };
 		CCCF3CA62226F28B00A7DF69 /* MOA_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */; };
 		CCCF3CAB2226F28B00A7DF69 /* MOA_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CAA2226F28B00A7DF69 /* MOA_SwiftTests.swift */; };
 		CCCF3CAD2226F28B00A7DF69 /* MOA_Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,7 +32,6 @@
 		CCCF3CCA2226F7D800A7DF69 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CC72226F7D800A7DF69 /* Dashboard.swift */; };
 		CCCF3CD1222729DB00A7DF69 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCC222729DB00A7DF69 /* URLExtensions.swift */; };
 		CCCF3CD2222729DB00A7DF69 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCD222729DB00A7DF69 /* Bundle.swift */; };
-		CCCF3CD3222729DB00A7DF69 /* VCExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCE222729DB00A7DF69 /* VCExtensions.swift */; };
 		CCCF3CD4222729DB00A7DF69 /* WeakContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCF3CCF222729DB00A7DF69 /* WeakContainer.swift */; };
 		CCDE4F17224D042A003D0208 /* MockPayUseCase.json in Resources */ = {isa = PBXBuildFile; fileRef = CCDE4F14224D042A003D0208 /* MockPayUseCase.json */; };
 		CCDE4F18224D042A003D0208 /* ApplicationServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDE4F15224D042A003D0208 /* ApplicationServiceParserTests.swift */; };
@@ -60,6 +61,8 @@
 		CC930AE32251397E0064A541 /* DashboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTests.swift; sourceTree = "<group>"; };
 		CC930AE5225141990064A541 /* VCExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCExtensionsTests.swift; sourceTree = "<group>"; };
 		CC930AEF22514E200064A541 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
+		CCB702EB229FF13D005B2E0B /* VCNavigatonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCNavigatonExtensions.swift; sourceTree = "<group>"; };
+		CCB702ED229FF53E005B2E0B /* VCNavigatonExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCNavigatonExtensionsTests.swift; sourceTree = "<group>"; };
 		CCCF3C9C2226F28B00A7DF69 /* MOA_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MOA_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCCF3C9F2226F28B00A7DF69 /* MOA_Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOA_Swift.h; sourceTree = "<group>"; };
 		CCCF3CA02226F28B00A7DF69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +77,6 @@
 		CCCF3CC72226F7D800A7DF69 /* Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		CCCF3CCC222729DB00A7DF69 /* URLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		CCCF3CCD222729DB00A7DF69 /* Bundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		CCCF3CCE222729DB00A7DF69 /* VCExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCExtensions.swift; sourceTree = "<group>"; };
 		CCCF3CCF222729DB00A7DF69 /* WeakContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakContainer.swift; sourceTree = "<group>"; };
 		CCDE4F14224D042A003D0208 /* MockPayUseCase.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockPayUseCase.json; sourceTree = "<group>"; };
 		CCDE4F15224D042A003D0208 /* ApplicationServiceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationServiceParserTests.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				CC930ADC2250E7080064A541 /* BundleTests.swift */,
 				CC930AE5225141990064A541 /* VCExtensionsTests.swift */,
 				CC930AEF22514E200064A541 /* TestStoryboard.storyboard */,
+				CCB702ED229FF53E005B2E0B /* VCNavigatonExtensionsTests.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -216,8 +219,8 @@
 			children = (
 				CCCF3CCD222729DB00A7DF69 /* Bundle.swift */,
 				CCCF3CCC222729DB00A7DF69 /* URLExtensions.swift */,
-				CCCF3CCE222729DB00A7DF69 /* VCExtensions.swift */,
 				CCCF3CCF222729DB00A7DF69 /* WeakContainer.swift */,
+				CCB702EB229FF13D005B2E0B /* VCNavigatonExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -350,9 +353,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCCF3CD1222729DB00A7DF69 /* URLExtensions.swift in Sources */,
+				CCB702EC229FF13D005B2E0B /* VCNavigatonExtensions.swift in Sources */,
 				CCCF3CD4222729DB00A7DF69 /* WeakContainer.swift in Sources */,
 				CCCF3CD2222729DB00A7DF69 /* Bundle.swift in Sources */,
-				CCCF3CD3222729DB00A7DF69 /* VCExtensions.swift in Sources */,
 				CCCF3CC42226F6B900A7DF69 /* ServiceExample.swift in Sources */,
 				CCCF3CBE2226F3F000A7DF69 /* ApplicationServiceType.swift in Sources */,
 				CCCF3CBA2226F3E400A7DF69 /* WireframeType.swift in Sources */,
@@ -374,6 +377,7 @@
 				CC930AD9224E47A50064A541 /* WeakContainerTests.swift in Sources */,
 				CC930AE22251288C0064A541 /* ModuleTests.swift in Sources */,
 				CCCF3CAB2226F28B00A7DF69 /* MOA_SwiftTests.swift in Sources */,
+				CCB702EE229FF53E005B2E0B /* VCNavigatonExtensionsTests.swift in Sources */,
 				CCDE4F18224D042A003D0208 /* ApplicationServiceParserTests.swift in Sources */,
 				CC930AE42251397E0064A541 /* DashboardTests.swift in Sources */,
 				CC4F11852254D733009B3FE1 /* WireframeTypeTests.swift in Sources */,

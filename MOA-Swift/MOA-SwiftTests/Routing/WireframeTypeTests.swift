@@ -14,7 +14,7 @@ class WireframeTypeTests: XCTestCase {
     func test_setupWireframeStoryboardParameter() {
         
         // Prepare
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         let storyboard1 = wireframe.storyboard
         
         // Execute
@@ -29,7 +29,7 @@ class WireframeTypeTests: XCTestCase {
     func test_setupWireframeInitialVcParameter() {
         
         // Prepare
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         
         // Execute
         wireframe.setupWireframe(parameters: [ModuleConstants.UrlParameter.viewController: "topVc"],
@@ -42,7 +42,7 @@ class WireframeTypeTests: XCTestCase {
     func test_viewControllerFromParametersNone() {
         
         // Prepare
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         
         // Execute
         let vc = wireframe.viewController(from: nil)
@@ -54,7 +54,7 @@ class WireframeTypeTests: XCTestCase {
     func test_viewControllerFromParameters() {
         
         // Prepare
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         
         // Execute
         let vc = wireframe.viewController(from: [ModuleConstants.UrlParameter.viewController: "topVc"])
@@ -65,7 +65,7 @@ class WireframeTypeTests: XCTestCase {
     
     func test_setPresentationModeNoParams() {
         
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         wireframe.setPresentationMode(from: nil)
         
         if case .root = wireframe.presentationMode {
@@ -78,7 +78,7 @@ class WireframeTypeTests: XCTestCase {
     
     func test_setPresentationModeModal() {
         
-        let wireframe = MockWireframe()
+        let wireframe = MockWireframe(application: UIApplication.shared)
         wireframe.setPresentationMode(from: [ModuleConstants.UrlParameter.presentationMode: "modal"])
         
         if case .modal = wireframe.presentationMode {
@@ -91,6 +91,15 @@ class WireframeTypeTests: XCTestCase {
 }
 
 class MockWireframe: WireframeType {
+    
+    var application: UIApplication
+    var injectedRootVc: UIViewController?
+    internal var tempRootVc: UIViewController?
+    
+    init(application: UIApplication, rootVc: UIViewController? = nil) {
+        self.application = application
+        self.injectedRootVc = rootVc
+    }
     
     let bundle = Bundle(for: WireframeTypeTests.self)
     lazy var storyboard: UIStoryboard = UIStoryboard(name: "TestStoryboard", bundle: bundle)

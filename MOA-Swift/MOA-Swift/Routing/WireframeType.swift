@@ -20,7 +20,7 @@ public enum ModulePresentationMode: String {
 /**
  This protocol will contain functionality that is used primarily by modules that origin from Storyboard
  */
-public protocol WireframeType: class {
+public protocol WireframeType: class, VCNavigatonExtensions {
     
     var storyboard: UIStoryboard { get set }
     var presentationMode: ModulePresentationMode { get set }
@@ -163,43 +163,31 @@ public extension WireframeType {
         DispatchQueue.main.async {
             
             func presentableVc() -> UIViewController? {
-                
-                let topmostVc = viewController.rootVc()?.topmostNavigationController()
-                return topmostVc?.children.last?.topPresentedController() ?? viewController.rootVc()?.topPresentedController()
+                return self.topNavigatedController ?? self.topPresentedController
             }
             
             switch self.presentationMode {
                 
             case .navigationStack:
-                
-                guard let navController = viewController.rootVc()?.topmostNavigationController() else {
-                    
+                guard let navController = self.topmostNavigationController else {
                     assertionFailure("ModuleHub: attempt to push controller on the top navigation controller failed - no UINavigationController found")
                     return
                 }
-                
                 navController.pushViewController(viewController, animated: true)
                 
             case .modal:
-                
                 // If we want to use modal with navigation bar, we can simply set it up in storyboard.
                 // We could do this here as well, if we'd have some other app global navigation scenarios.
-                
                 presentableVc()?.present(viewController, animated: true, completion: nil)
                 
             case .none: ()
                 
             case .root:
-                
                  // Default is .root
                 fallthrough
                 
             default:
-                
-                if let topmostVc = viewController.rootVc() {
-                    let window = topmostVc.window(for: topmostVc.view)
-                    window?.rootViewController = topmostVc
-                }
+                self.application.keyWindow?.rootViewController = viewController
             }
         }
     }

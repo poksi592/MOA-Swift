@@ -22,7 +22,7 @@ class VCExtensionsTests: XCTestCase {
     override func tearDown() {
         storyboard = nil
     }
-
+/*
 	func test_windowKeyWindow() {
 		
 		let topVc = storyboard?.instantiateViewController(withIdentifier: "topVc")
@@ -118,7 +118,10 @@ class VCExtensionsTests: XCTestCase {
         // Test
         XCTAssertEqual(presentedVc, containerVc)
     }
+     
+     */
 }
+ 
 
 class MockTopViewController: StoryboardIdentifiableViewController {
 	
@@ -126,6 +129,14 @@ class MockTopViewController: StoryboardIdentifiableViewController {
 
 class MockContainerViewController: StoryboardIdentifiableViewController {
 	
+}
+
+class MockNavigationViewController: UINavigationController {
+    
+}
+
+class MockTabBarController: UITabBarController {
+    
 }
 
 class MockPresentingViewController: StoryboardIdentifiableViewController {
@@ -209,10 +220,3 @@ class MockKeyWindow: UIWindow {
     }
 }
 
-
-
-
-
-//var storyboard = UIStoryboard(name: "Main", bundle: nil)
-//var controller = storyboard.instantiateViewControllerWithIdentifier("contentViewController") as UINavigationController
-//controller.viewDidLoad()
