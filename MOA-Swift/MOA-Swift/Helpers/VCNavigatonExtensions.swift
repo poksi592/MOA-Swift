@@ -19,7 +19,7 @@ public protocol VCNavigatonExtensions {
     var topNavigatedController: UIViewController? { get }
 }
 
-extension VCNavigatonExtensions {
+public extension VCNavigatonExtensions {
     
     var rootVc: UIViewController? {
         get {
