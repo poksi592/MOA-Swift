@@ -33,7 +33,7 @@ public protocol WireframeType: class, VCNavigatonExtensions {
      If it contains the key `viewController` then its value is used as name of view controller
      - returns: UIViewController, which is default from storyboard of the one that was specified by parameters
      */
-    func initialViewController(from parameters:[String: String]?) -> UIViewController?
+    func initialViewController(from parameters:[String: Any]?) -> UIViewController?
     
     /**
      Sets `presentationMode`, if its name is specified in parameters, where key by convention is equal to `presentationMode`
@@ -42,7 +42,7 @@ public protocol WireframeType: class, VCNavigatonExtensions {
      If it contains the key `presentationMode` then its value is used to init view controller
      If it's `nil`, then `.root` is assumed.
      */
-    func setPresentationMode(from parameters:[String: String]?)
+    func setPresentationMode(from parameters:[String: Any]?)
     
     /**
      Presents view controller according to `presentationMode`
@@ -84,7 +84,7 @@ public extension WireframeType {
         presentedViewControllers = presentedViewControllers.filter { $0.value != nil }
         guard presentedViewControllers.isEmpty else { return }
         
-        if let storyboardName = parameters?[ModuleConstants.UrlParameter.storyboard] {
+        if let storyboardName = parameters?[ModuleConstants.UrlParameter.storyboard] as? String {
             storyboard = UIStoryboard(name: storyboardName, bundle: bundle)
         }
         
@@ -95,9 +95,9 @@ public extension WireframeType {
         }
     }
     
-    func viewController(from parameters:[String: String]?) -> UIViewController? {
+    func viewController(from parameters:[String: Any]?) -> UIViewController? {
         
-        guard let viewControllerName = parameters?[ModuleConstants.UrlParameter.viewController] else {
+        guard let viewControllerName = parameters?[ModuleConstants.UrlParameter.viewController] as? String else {
             return nil
         }
         let viewController = storyboard.instantiateViewController(withIdentifier: viewControllerName)
@@ -111,7 +111,7 @@ public extension WireframeType {
         // One particular view controller should be presented only once if
         // it conforms to the StoryboardIdentifiable protocol
         // Here we add it to the array of already presented
-        let identifier = parameters?[ModuleConstants.UrlParameter.viewController]
+        guard let identifier = parameters?[ModuleConstants.UrlParameter.viewController] as? String else { return nil }
         
         // Each time it's called, `presentedViewControllers` is cleared from empty containers
         presentedViewControllers = presentedViewControllers.filter { $0.value != nil }
@@ -136,9 +136,9 @@ public extension WireframeType {
      This function could be private, too, but we assume module might want to inject some other
      properties to it, therefore we hand over control to the module, after initial VC is instantiated
      */
-    func initialViewController(from parameters:[String: String]?) -> UIViewController? {
+    func initialViewController(from parameters:[String: Any]?) -> UIViewController? {
         
-        guard let viewControllerName = parameters?[ModuleConstants.UrlParameter.viewController] else {
+        guard let viewControllerName = parameters?[ModuleConstants.UrlParameter.viewController] as? String else {
             
             return storyboard.instantiateInitialViewController()
         }
@@ -146,9 +146,9 @@ public extension WireframeType {
     }
     
 
-    func setPresentationMode(from parameters: [String: String]?) {
+    func setPresentationMode(from parameters: [String: Any]?) {
         
-        guard let mode = parameters?[ModuleConstants.UrlParameter.presentationMode],
+        guard let mode = parameters?[ModuleConstants.UrlParameter.presentationMode] as? String,
                 let modulePresentationMode = ModulePresentationMode(rawValue: mode) else {
                 
                 presentationMode = .root

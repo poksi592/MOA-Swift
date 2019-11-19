@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public typealias ModuleParameters = [String: String]
+public typealias ModuleParameters = [String: Any]
 
 public struct ModuleConstants {
     
@@ -161,7 +161,7 @@ public extension ModuleType {
             }
         }.compactMap { $0 }
         
-        var routable = instantiatedRoutables.first(where: { routable in
+        let routable = instantiatedRoutables.first(where: { routable in
             return subscribedRoutableType == type(of: routable.value!)
         })
         
