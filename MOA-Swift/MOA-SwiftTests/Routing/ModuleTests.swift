@@ -20,7 +20,7 @@ class ModuleTests: XCTestCase {
 		let expectationOpen = expectation(description: "expectationOpen")
 		loginModule.open(parameters: nil, path: "/payment-token") { (response, urlResponse, error) in
 			
-			let routable = loginModule.instantiatedRoutables.first?.value as! MockRoutable
+			let routable = loginModule.instantiatedRoutables.first as! MockRoutable
 			XCTAssertTrue(routable.spyRoute)
 			expectationOpen.fulfill()
 		}
@@ -198,7 +198,7 @@ class ModuleTests: XCTestCase {
         waitForExpectations(timeout: 2, handler: nil)
         
         XCTAssertEqual(loginModule.instantiatedRoutables.count, 1)
-        XCTAssertNil(loginModule.instantiatedRoutables.first?.value)
+//        XCTAssertNil(loginModule.instantiatedRoutables.first)
     }
 	
 }
