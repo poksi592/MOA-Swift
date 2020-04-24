@@ -25,7 +25,7 @@ class ApplicationRouterTests: XCTestCase {
 		let expectationOpen = expectation(description: "expectationOpen")
 		router.open(url: url!) { (response, urlResponse, responseError) in
 			
-			let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
+			let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
 			XCTAssertTrue(routable.spyRoute)
 			expectationOpen.fulfill()
 		}
@@ -46,7 +46,7 @@ class ApplicationRouterTests: XCTestCase {
         let expectationOpen = expectation(description: "expectationOpen")
         router.open(url: url!, injectedObjects: ["inject": "me"]) { (response, urlResponse, responseError) in
             
-            let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
+            let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
             XCTAssertTrue(routable.spyInjectedObject)
             expectationOpen.fulfill()
         }
@@ -67,7 +67,7 @@ class ApplicationRouterTests: XCTestCase {
         let expectationOpen = expectation(description: "expectationOpen")
         router.open(url: url!) { (response, urlResponse, responseError) in
             
-            let routable = router.instantiatedModules.first?.instantiatedRoutables.first?.value as! MockRoutable
+            let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
             XCTAssertTrue(routable.spyUrlParameterPassed)
             expectationOpen.fulfill()
         }

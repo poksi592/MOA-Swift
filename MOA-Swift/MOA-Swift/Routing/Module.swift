@@ -123,7 +123,7 @@ public protocol ModuleType: class {
      Reflection is used for memory savvy approach
      */
     var subscribedRoutables: [ModuleRoutable.Type] { get }
-    var instantiatedRoutables: [WeakContainer<ModuleRoutable>] { get set }
+    var instantiatedRoutables: [ModuleRoutable] { get set }
     
     /**
      Function has to implement start of the module
@@ -145,35 +145,19 @@ public extension ModuleType {
               injectedObjects: [String: Any]? = nil,
               callback: ModuleCallback?) {
         
-        guard let subscribedRoutableType = subscribedRoutables.first(where: { subscribedType in
-            
-            let matchedType = subscribedType.getPaths().first(where: { $0 == path })
-            return matchedType != nil
+        guard let routableType = (subscribedRoutables.first {
+            $0.getPaths().contains { $0 == path }
         }) else { return }
-        
-        // Flush empty weak containers in 'instantiatedRoutables'
-        instantiatedRoutables = instantiatedRoutables.map { routable in
-            if routable.value == nil {
-                return nil
-            }
-            else {
-                return routable
-            }
-        }.compactMap { $0 }
-        
-        let routable = instantiatedRoutables.first(where: { routable in
-            return subscribedRoutableType == type(of: routable.value!)
-        })
-        
-        if let routable = routable?.value {
+
+        if let routable = (instantiatedRoutables.first{ routableType == type(of: $0) }) {
             routable.route(parameters: parameters,
                            path: path,
                            injectedObjects: injectedObjects,
                            callback: callback)
         }
         else {
-            let routable = subscribedRoutableType.routable()
-            instantiatedRoutables.append(WeakContainer(value: routable))
+            let routable = routableType.routable()
+            instantiatedRoutables.append(routable)
             routable.route(parameters: parameters,
                            path: path,
                            injectedObjects: injectedObjects,

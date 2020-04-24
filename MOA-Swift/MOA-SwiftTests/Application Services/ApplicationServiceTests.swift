@@ -176,7 +176,7 @@ class MockLoginModule: ModuleType {
 	}()
 	
 	var subscribedRoutables: [ModuleRoutable.Type] = [MockRoutable.self]
-	var instantiatedRoutables: [WeakContainer<ModuleRoutable>] = []
+	var instantiatedRoutables: [ModuleRoutable] = []
 }
 
 class MockPaymentsModule: ModuleType {
@@ -192,7 +192,7 @@ class MockPaymentsModule: ModuleType {
 	}()
 	
 	var subscribedRoutables: [ModuleRoutable.Type] = [MockRoutable.self]
-	var instantiatedRoutables: [WeakContainer<ModuleRoutable>] = []
+	var instantiatedRoutables: [ModuleRoutable] = []
     var retainedRoutables: [ModuleRoutable] = []
 }
 
