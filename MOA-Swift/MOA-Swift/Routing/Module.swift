@@ -145,8 +145,8 @@ public extension ModuleType {
               injectedObjects: [String: Any]? = nil,
               callback: ModuleCallback?) {
         
-        guard let routableType = (subscribedRoutables.first { subscribedType in
-            subscribedType.getPaths().first(where: { $0 == path }) != nil
+        guard let routableType = (subscribedRoutables.first {
+            $0.getPaths().contains { $0 == path }
         }) else { return }
 
         if let routable = (instantiatedRoutables.first{ routableType == type(of: $0) }) {
