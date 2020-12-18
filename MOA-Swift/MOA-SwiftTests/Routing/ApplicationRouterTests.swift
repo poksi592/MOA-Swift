@@ -12,101 +12,66 @@ import XCTest
 class ApplicationRouterTests: XCTestCase {
 
 	func test_openWithPath() {
-		
-		// Prepare
-		let url = URL(scheme: "testScheme",
-					  host: "login",
-					  path: "/payment-token",
-					  parameters: ["parameterKey": "parameterValue"])
-		let router = ApplicationRouter()
-		router.instantiatedModules = [MockLoginModule()]
-		
-		// Execute and Test
+        let router = ApplicationRouter<DependenciesProviderMock>(Module(route: "login", routable: MockRoutable.self))
+        let url = URL(
+            scheme: "testScheme",
+            host: "login",
+            path: "/payment-token",
+            parameters: ["parameterKey": "parameterValue"]
+        )!
+
 		let expectationOpen = expectation(description: "expectationOpen")
-		router.open(url: url!) { (response, urlResponse, responseError) in
-			
-			let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
-			XCTAssertTrue(routable.spyRoute)
+        var routable: MockRoutable!
+        router.open(url: url, dependenciesProvider: DependenciesProviderMock()) { (response, urlResponse, responseError) in
+            routable = router.modules.first?.instantiatedRoutable as? MockRoutable
 			expectationOpen.fulfill()
 		}
-		waitForExpectations(timeout: 2, handler: nil)
+		waitForExpectations(timeout: 1, handler: nil)
+
+        XCTAssertTrue(routable.spyRoute)
 	}
-    
-    func test_openWithInjectedObject() {
-        
-        // Prepare
-        let url = URL(scheme: "testScheme",
-                      host: "login",
-                      path: "/payment-token",
-                      parameters: ["parameterKey": "parameterValue"])
-        let router = ApplicationRouter()
-        router.instantiatedModules = [MockLoginModule()]
-        
-        // Execute and Test
-        let expectationOpen = expectation(description: "expectationOpen")
-        router.open(url: url!, injectedObjects: ["inject": "me"]) { (response, urlResponse, responseError) in
-            
-            let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
-            XCTAssertTrue(routable.spyInjectedObject)
-            expectationOpen.fulfill()
-        }
-        waitForExpectations(timeout: 2, handler: nil)
-    }
-    
+
     func test_openWithAddedUrlParameter() {
-        
-        // Prepare
-        let url = URL(scheme: "testScheme",
-                      host: "login",
-                      path: "/payment-token",
-                      parameters: ["parameterKey": "parameterValue"])
-        let router = ApplicationRouter()
-        router.instantiatedModules = [MockLoginModule()]
-        
-        // Execute and Test
+        let router = ApplicationRouter<DependenciesProviderMock>(Module(route: "login", routable: MockRoutable.self))
+        let url = URL(
+            scheme: "testScheme",
+            host: "login",
+            path: "/payment-token",
+            parameters: ["parameterKey": "parameterValue"]
+        )!
+
         let expectationOpen = expectation(description: "expectationOpen")
-        router.open(url: url!) { (response, urlResponse, responseError) in
-            
-            let routable = router.instantiatedModules.first?.instantiatedRoutables.first as! MockRoutable
-            XCTAssertTrue(routable.spyUrlParameterPassed)
+        var routable: MockRoutable!
+        router.open(url: url, dependenciesProvider: DependenciesProviderMock()) { (response, urlResponse, responseError) in
+            routable = router.modules.first?.instantiatedRoutable as? MockRoutable
             expectationOpen.fulfill()
         }
-        waitForExpectations(timeout: 2, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
+
+        XCTAssertTrue(routable.spyUrlParameterPassed)
     }
 }
 
-//class MockTestModule: ModuleType {
-//
-//	func setup(parameters: ModuleParameters?) {}
-//	
-//	var route: String = {
-//		return "test-module"
-//	}()
-//
-//	var paths: [String] = {
-//		return ["/test-method"]
-//	}()
-//
-//	var subscribedRoutables: [ModuleRoutable.Type] = [MockTestRoutable.self]
-//	var instantiatedRoutables: [WeakContainer<ModuleRoutable>] = []
-//}
-//
-//class MockTestRoutable: ModuleRoutable {
-//
-//	var spyRoute = false
-//
-//	required init() {}
-//
-//	static func getPaths() -> [String] {
-//		return ["/test-method"]
-//	}
-//
-//	static func routable() -> ModuleRoutable {
-//		return self.init()
-//	}
-//
-//	func route(parameters: ModuleParameters?, path: String?, callback: ModuleCallback?) {
-//		spyRoute = true
-//	}
-//}
+private final class DependenciesProviderMock: DependenciesProvider {
+    let intentsStorage = IntentsStorage()
+}
 
+private final class MockRoutable: Routable<DependenciesProviderMock> {
+    var spyRoute = false
+    var spyUrlParameterPassed = false
+
+    override class var paths: [String] {
+        [
+            "/payment-token",
+            "/login"
+        ]
+    }
+
+    override func route(parameters: ModuleParameters, dependenciesProvider: DependenciesProviderMock, path: String?, callback: @escaping ModuleCallback) {
+        spyRoute = true
+        if let _ = parameters["url"] {
+            spyUrlParameterPassed = true
+        }
+        callback(nil,nil,nil)
+    }
+}

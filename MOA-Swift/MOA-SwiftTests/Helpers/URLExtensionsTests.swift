@@ -10,201 +10,108 @@ import XCTest
 @testable import MOA_Swift
 
 class URLExtensionsTests: XCTestCase {
-	
 	func test_initValidScheme() {
-		
-		let url = URL(scheme: "myscheme",
-					  host: "myhost")
+		let url = URL(scheme: "myscheme", host: "myhost")
+
 		XCTAssertNotNil(url)
 	}
 	
 	func test_initIncorrectParameters() {
-
 		let url = URL(scheme: "234623", host: "234345")
+
 		XCTAssertNil(url)
 	}
 	
 	func test_initAllParameters() {
-		
-		let url = URL(scheme: "myscheme",
-					  host: "myhost",
-					  path: "/mypath",
-					  parameters: ["parameterKey": "parameterValue"])
+		let url = URL(
+            scheme: "myscheme",
+            host: "myhost",
+            path: "/mypath",
+            parameters: ["parameterKey": "parameterValue"]
+        )
+
 		XCTAssertNotNil(url)
 		XCTAssertEqual(url?.scheme, "myscheme")
 		XCTAssertEqual(url?.host, "myhost")
 		XCTAssertEqual(url?.path, "/mypath")
 	}
-	
-	// MARK: Test scheme
+    func testURLComponents_QueryItemsDictionary() {
+        let components = URLComponents(string: "http://test.test?parameter1=123&parameter2=321")!
 
-	func test_isValidValid() {
-		
-		let scheme = "a1sd+c.d-w"
-		XCTAssertTrue(scheme.isValidSchemeName)
-	}
-	
-	func test_isValidNotFirstLetter() {
-		
-		let scheme = "1sd+c.d-w"
-		XCTAssertFalse(scheme.isValidSchemeName)
-	}
-	
-	func test_isValidFirstWhitespace() {
-		
-		let scheme = " a1sd+c.d-w"
-		XCTAssertFalse(scheme.isValidSchemeName)
-	}
-	
-	func test_isValidWhitespace() {
-		
-		let scheme = "a1sd+c.d-w "
-		XCTAssertFalse(scheme.isValidSchemeName)
-	}
-	
-	func test_isValidInvalidCharacter1() {
-		
-		let scheme = "a1sd+c.d-w("
-		XCTAssertFalse(scheme.isValidSchemeName)
-	}
-	
-	func test_isValidInvalidCharacter2() {
-		
-		let scheme = "a1sd+c.d-w*"
-		XCTAssertFalse(scheme.isValidSchemeName)
-	}
-	
-	// MARK: Test Host
-	
-	func test_isValidLettersOnly() {
-		
-		let moduleName = "abcd"
-		XCTAssertTrue(moduleName.isValidHostName)
-	}
-	
-	func test_isValidLettersAndDash() {
-		
-		let moduleName = "abc-d"
-		XCTAssertTrue(moduleName.isValidHostName)
-	}
-	
-	func test_isValidLettersAndNumbers() {
-		
-		let moduleName = "abc-d9"
-		XCTAssertTrue(moduleName.isValidHostName)
-	}
-	
-	func test_isValidHostNameNotFirstLetter() {
-		
-		let moduleName = "9abc-d9"
-		XCTAssertFalse(moduleName.isValidHostName)
-	}
-	
-	func test_isValidHostNameInvalidCharacter1() {
-		
-		let moduleName = "abc-d9*"
-		XCTAssertFalse(moduleName.isValidHostName)
-	}
-	
-	func test_isValidHostNameInvalidCharacter2() {
-		
-		let moduleName = "abc-d9."
-		XCTAssertFalse(moduleName.isValidHostName)
-	}
-	
-	// MARK: Test Path
-	
-	func test_isValidPathModuleLettersOnly() {
-		
-		let moduleName = "/abcd"
-		XCTAssertTrue(moduleName.isValidPathModule)
-	}
-	
-	func test_isValidPathModuleLettersAndDash() {
-		
-		let moduleName = "/abc-d"
-		XCTAssertTrue(moduleName.isValidPathModule)
-	}
-	
-	func test_isValidPathModuleLettersAndNumbers() {
-		
-		let moduleName = "/abc-d9"
-		XCTAssertTrue(moduleName.isValidPathModule)
-	}
-	
-	func test_isValidPathModuleNotSlach() {
-		
-		let moduleName = "abc-d9"
-		XCTAssertFalse(moduleName.isValidPathModule)
-	}
-	
-	func test_isValidPathModuleInvalidCharacter1() {
-		
-		let moduleName = "/abc-d9*"
-		XCTAssertFalse(moduleName.isValidPathModule)
-	}
-	
-	func test_isValidPathModuleInvalidCharacter2() {
-		
-		let moduleName = "/abc-d9."
-		XCTAssertFalse(moduleName.isValidPathModule)
-	}
-	
-	// MARK: Test Bundle
-	
-	func test_containsInAppSchemeValidScheme() {
-		
-		// Prepare
-		let url = URL(scheme: "testScheme",
-					  host: "myhost")
-		let bundle = Bundle(for: URLExtensionsTests.self)
-		
-		// Execute
-		let hasScheme = url!.containsInAppScheme(for: bundle)
-		
-		// Testz
-		XCTAssertNotNil(hasScheme)
-	}
-	
-	func test_containsInAppSchemeInvalidScheme() {
-		
-		// Prepare
-		let url = URL(scheme: "myscheme",
-					  host: "myhost")
-		let bundle = Bundle(for: URLExtensionsTests.self)
-		
-		// Execute
-		let hasScheme = url!.containsInAppScheme(for: bundle)
-		
-		// Test
-		XCTAssertNotNil(hasScheme)
-	}
-	
-	func test_isHttpAddressHttp() {
-		
-		// Prepare
-		let url = URL(scheme: "http",
-					  host: "myhost")
-		// Test
-		XCTAssertTrue(url!.isHttpAddress)
-	}
-	
-	func test_isHttpAddressHttps() {
-		
-		// Prepare
-		let url = URL(scheme: "https",
-					  host: "myhost")
-		// Test
-		XCTAssertTrue(url!.isHttpAddress)
-	}
-	
-	func test_isHttpAddressNot() {
-		
-		// Prepare
-		let url = URL(scheme: "myscheme",
-					  host: "myhost")
-		// Test
-		XCTAssertFalse(url!.isHttpAddress)
-	}
+        let dictionary = components.queryItemsDictionary
+
+        XCTAssertEqual(dictionary, ["parameter1": "123", "parameter2": "321"])
+    }
+
+    func test_isValidValid() {
+        XCTAssertTrue("a1sd+c.d-w".isValidSchemeName)
+    }
+
+    func test_isValidNotFirstLetter() {
+        XCTAssertFalse("1sd+c.d-w".isValidSchemeName)
+    }
+
+    func test_isValidFirstWhitespace() {
+        XCTAssertFalse(" a1sd+c.d-w".isValidSchemeName)
+    }
+
+    func test_isValidWhitespace() {
+        XCTAssertFalse("a1sd+c.d-w ".isValidSchemeName)
+    }
+
+    func test_isValidInvalidCharacter1() {
+        XCTAssertFalse("a1sd+c.d-w(".isValidSchemeName)
+    }
+
+    func test_isValidInvalidCharacter2() {
+        XCTAssertFalse("a1sd+c.d-w*".isValidSchemeName)
+    }
+
+    func test_isValidLettersOnly() {
+        XCTAssertTrue("abcd".isValidHostName)
+    }
+
+    func test_isValidLettersAndDash() {
+        XCTAssertTrue("abc-d".isValidHostName)
+    }
+
+    func test_isValidLettersAndNumbers() {
+        XCTAssertTrue("abc-d9".isValidHostName)
+    }
+
+    func test_isValidHostNameNotFirstLetter() {
+        XCTAssertFalse("9abc-d9".isValidHostName)
+    }
+
+    func test_isValidHostNameInvalidCharacter1() {
+        XCTAssertFalse("abc-d9*".isValidHostName)
+    }
+
+    func test_isValidHostNameInvalidCharacter2() {
+        XCTAssertFalse("abc-d9.".isValidHostName)
+    }
+
+    func test_isValidPathModuleLettersOnly() {
+        XCTAssertTrue("/abcd".isValidPathModule)
+    }
+
+    func test_isValidPathModuleLettersAndDash() {
+        XCTAssertTrue("/abc-d".isValidPathModule)
+    }
+
+    func test_isValidPathModuleLettersAndNumbers() {
+        XCTAssertTrue("/abc-d9".isValidPathModule)
+    }
+
+    func test_isValidPathModuleNotSlach() {
+        XCTAssertFalse("abc-d9".isValidPathModule)
+    }
+
+    func test_isValidPathModuleInvalidCharacter1() {
+        XCTAssertFalse("/abc-d9*".isValidPathModule)
+    }
+
+    func test_isValidPathModuleInvalidCharacter2() {
+        XCTAssertFalse("/abc-d9.".isValidPathModule)
+    }
 }
-
