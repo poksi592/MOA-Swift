@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9661DCB7-E36C-4806-9215-99956FF3038A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MOA-Swift.xcodeproj",
+        "identifier" : "CCCF3CA42226F28B00A7DF69",
+        "name" : "MOA-SwiftTests"
+      }
+    }
+  ],
+  "version" : 1
+}
